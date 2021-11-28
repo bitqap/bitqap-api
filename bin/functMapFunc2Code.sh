@@ -106,5 +106,6 @@ mapERRORFunction2Code () {
                 *)
                                 code=000
                                 ;;
+                esac
         echo $code
 }
