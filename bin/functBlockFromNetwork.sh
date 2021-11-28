@@ -1,6 +1,7 @@
 
 listNewBlock() {
         commandCode=$(mapFunction2Code ${FUNCNAME[0]})
+        errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
         fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
         fromBlockID=$(echo ${jsonMessage}  | jq -r '.fromBlockID')
         lastBlockInLocal=$(ls -1 $BLOCKPATH| grep "solved$\|blk$"| sort -n -k 1 | tail -n 1| awk -v FS='.' '{print $1}')
@@ -18,6 +19,7 @@ validateNetworkBlockHash() {
         curr=$(pwd)
         #[ -z $flagByPassFolder ] && flagByPassFolder=1 || flagByPassFolder=0
         flagByPassFolder=1
+        errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
         cd $folder
         # Check that there are blocks to validate
         getLastBlockToAdd=$(ls -1 $BLOCKPATH| sort -n| tail -n 1)
@@ -34,7 +36,7 @@ validateNetworkBlockHash() {
                         REPORTEDHASH=`sed -n '2p' $j`
                         [[ $CALCHASH != $REPORTEDHASH ]] && 
                         #echo "Hash mismatch!  $i has changed!  Do not trust any block after and including $i" && 
-                        echo "{\"command\": \"AddBlockFromNetwork\",\"commandCode\":\"$commandCode\",\"messageType\":\"direct\",\"destinationSocket\": \"$fromSocket\",\"status\": \"2\",\"message\":\"Hash mismatch!  $i has changed!  Do not trust any block after and including $i\"}"
+                        echo "{\"command\": \"AddBlockFromNetwork\",\"commandCode\":\"$errorCode\",\"messageType\":\"direct\",\"destinationSocket\": \"$fromSocket\",\"status\": \"2\",\"message\":\"Hash mismatch!  $i has changed!  Do not trust any block after and including $i\"}"
                         #exit 1
         done
         cd $curr
@@ -55,6 +57,7 @@ checkBlockSignature() {
 
 provideBlocks() {
         commandCode=$(mapFunction2Code ${FUNCNAME[0]})
+        errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
         fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
         blockMessage="["
         for i in $(echo $jsonMessage  | jq -r '.blockList'| jq -c '.[]'| sed "s/\"//g"); do
@@ -73,34 +76,43 @@ provideBlocks() {
         # if 30% then provide message to download full copy (optional)
 }
 
+
+removeTransactionsFromPending() {
+    files=$1
+    cat ${files[@]} | grep TX | while read tx; do
+        sed -i "/$tx/d" $BLOCKPATH/blk.pending
+    done
+}
+
 AddBlockFromNetwork() {
         commandCode=$(mapFunction2Code ${FUNCNAME[0]})
+        errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
         # get file by BASE64 format.
         fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
         #
-        blocksTeamp=$tempRootFolder/block_$RANDOM
-        mkdir -p $blocksTeamp
+        blocksTemp=$tempRootFolder/block_$RANDOM
+        mkdir -p $blocksTemp
         count=0
         ERROR=0
         for newBloks in  $(echo $jsonMessage | jq -r '.result' | jq -r '.blockList' | jq -c .[]);
         do
                 let " count = $count + 1 "
-                echo $newBloks |sed "s/\"//g"| base64 -d > $blocksTeamp/$count.solved
-                BlockID=$(cat $blocksTeamp/$count.solved| grep BLOCKID | awk -v FS=':' '{ print $2}'| sed "s/ //g")
-                [ ${#BlockID} -ne 0 ] && mv $blocksTeamp/$count.solved $blocksTeamp/$BlockID || mv $blocksTeamp/$count.solved $blocksTeamp/$count.tmp.unsolved && BlockID="$count.tmp.unsolved" && continue
-                [ $(echo ${BlockID}| awk -v FS='.' '{print $3}') == "solved" ] && checkBlockSignature $blocksTeamp/$BlockID.solved
+                echo $newBloks |sed "s/\"//g"| base64 -d > $blocksTemp/$count.solved
+                BlockID=$(cat $blocksTemp/$count.solved| grep BLOCKID | awk -v FS=':' '{ print $2}'| sed "s/ //g")
+                [ ${#BlockID} -ne 0 ] && mv $blocksTemp/$count.solved $blocksTemp/$BlockID || mv $blocksTemp/$count.solved $blocksTemp/$count.tmp.unsolved && BlockID="$count.tmp.unsolved" && continue
+                [ $(echo ${BlockID}| awk -v FS='.' '{print $3}') == "solved" ] && checkBlockSignature $blocksTemp/$BlockID.solved
                 if [ $? -eq 0 ]; then
-                    cat $blocksTeamp/$BlockID |  grep '^TX' |while read line; do
+                    cat $blocksTemp/$BlockID |  grep '^TX' |while read line; do
                         # below function coming from functTransactionFromNetwork.sh
                         validateTransactionMessage $line
                         if [ $? -ne 0 ]; then
-                            echo "{\"command\":\"AddBlockFromNetwork\",\"messageType\":\"direct\",status\":"2",\"message\":\"Cheating in chain, transaction issue in $BlockID.solved\"}"
+                            echo "{\"command\":\"AddBlockFromNetwork\",\"commandCode\":\"$errorCode\",\"messageType\":\"direct\",status\":"2",\"message\":\"Cheating in chain, transaction issue in $BlockID.solved\"}"
                             let " ERROR = $ERROR + 1 "
                             break
                         fi
                     done
                 else
-                    echo "{\"command\":\"AddBlockFromNetwork\",\"messageType\":\"direct\",\"status\":"2",\"message\":\"Cheating in chain, block sign issue\"}"
+                    echo "{\"command\":\"AddBlockFromNetwork\",\"messageType\":\"direct\",\"commandCode\":\"$errorCode\",\"status\":"2",\"message\":\"Cheating in chain, block sign issue\"}"
                     let " ERROR = $ERROR + 1 "
                     break
                 fi
@@ -108,20 +120,23 @@ AddBlockFromNetwork() {
         if [ $ERROR -gt 0 ]; then
             exit 1
         else
-            maxIDcurrent=$(ls -1 $blocksTeamp | grep "\.solved$" | sort -n | awk -v FS='.blk.solved' '{print $1+1}' )
-            mv $blocksTeamp/1.tmp.unsolved $blocksTeamp/$maxIDcurrent.blk
-            firstFileNetwID=$(ls -1 $blocksTeamp| sort -n| grep "solved$\|blk$" | head -1| awk -v FS='.blk' '{print $1}')
+            maxIDcurrent=$(ls -1 $blocksTemp | grep "\.solved$" | sort -n | awk -v FS='.blk.solved' '{print $1+1}' )
+            mv $blocksTemp/1.tmp.unsolved $blocksTemp/$maxIDcurrent.blk
+            firstFileNetwID=$(ls -1 $blocksTemp| sort -n| grep "solved$\|blk$" | head -1| awk -v FS='.blk' '{print $1}')
             lastFileCurrIDplus1=$(ls -1 $BLOCKPATH| grep solved|sort -n| tail -n 1| awk -v FS='.blk.solved' '{print $1+1}')
             if [ $firstFileNetwID == $lastFileCurrIDplus1 ]; then
                 #echo "{\"command\":\"AddBlockFromNetwork\",\"messageType\":\"direct\",\"status\":"0",\"destinationSocket\":\"$fromSocket\"}"
-                validateNetworkBlockHash "$blocksTeamp"
-                mv $blocksTeamp/*blk* $BLOCKPATH/
+                validateNetworkBlockHash "$blocksTemp"
+                mv $blocksTemp/*blk* $BLOCKPATH/
+                # remove TX from pending transactions
+                blocks=$(ls ${blocksTemp}/*blk*)
+                removeTransactionsFromPending $blocks
                 echo "{\"command\":\"AddBlockFromNetwork\",\"messageType\":\"direct\",\"status\":"0",\"destinationSocket\":\"$fromSocket\"}"
                 echo "{\"command\":\"AddBlockFromNetwork\",\"messageType\":\"direct\",\"status\":"0",\"message\":\"got new block\",\"destinationSocket\":\"$fromSocket\"}"
                 # BROADCAST to others about this info (except Socket ID). Becase that socket sent it
                 echo "{\"command\":\"notification\",\"commandCode\":\"$commandCode\",\"messageType\":\"broadcast\",\"exceptSocket\":$fromSocket,\"status\":"0",\"message\":\"got new block\"}"
-            else
-                echo "{\"command\":\"AddBlockFromNetwork\",\"messageType\":\"direct\",\"status\":"2",\"destinationSocket\":\"$fromSocket\",\"message\":\"Folder:$blocksTeamp, firstFileNetwID=$firstFileNetwID and lastFileCurrIDplus1=$lastFileCurrIDplus1 Chain ID $BlockID is not matching\"}"
+            else 
+                echo "{\"command\":\"AddBlockFromNetwork\",\"commandCode\":\"$errorCode\",\"messageType\":\"direct\",\"status\":"2",\"destinationSocket\":\"$fromSocket\",\"message\":\"Folder:$blocksTemp, firstFileNetwID=$firstFileNetwID and lastFileCurrIDplus1=$lastFileCurrIDplus1 Chain ID $BlockID is not matching\"}"
             fi
         fi
 }

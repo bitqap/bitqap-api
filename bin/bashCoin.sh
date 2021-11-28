@@ -1,6 +1,6 @@
 #!/bin/bash
 
-        version=1.2.2.4
+        version=1.2.2.5
         ## description (Interface message change to JSON. make messages competable with WebSocket)
         REWARD_COIN=2
 
@@ -202,6 +202,7 @@ buildWIPBlock () {
 
 mine () {
         commandCode=$(mapFunction2Code ${FUNCNAME[0]})
+        errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
         ## ADD CONTROL. THIS MESSAGE SHOULD COME FROM INTERNAL IP ADDRESS. (MINER GUI)
         ## THIS MESSAGE IS BROADCAST
         fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
@@ -219,6 +220,16 @@ mine () {
                         ZEROS=$(echo $HASH | cut -c1-$DIFF)
         done
 
+        # THIS IS IMPORTANT STEP
+        if [ -f $CURRENTBLOCK.solved ]; then 
+                # if file exist already, it means already someone mined and added as a file.
+                # return ERROR and exit. Let cliend send again mine command to mine next block.
+                echo "{\"command\":\"mine\",\"commandCode\":\"$errorCode\",\"appType\":\"$appType\",\"messageType\":\"direct\",\"status\":\"2\", \"timeUTC\":\"$(date -u  +"%Y%m%d%H%M%S")\",\"message\":\"$CURRENTBLOCK is already added by someone in the network\"}"
+                # destroy tmp BLOCK file with included transactions
+                rm -f $CURRENTBLOCK.wip
+                exit 1
+
+        fi 
         printf "`cat $CURRENTBLOCK.wip`\n\n## Nonce: #################################################################################\n$NONCE\n" > $CURRENTBLOCK.solved
 
         if [ $? -eq 0 ]; then
@@ -228,13 +239,7 @@ mine () {
                         sed -i "/$txID/d" blk.pending 
                 done
         fi
-        #echo "Success!"
-        #echo "Nonce:            " $NONCE
-        #echo "Hash:              " $HASH
 
-        
-
-        #printf "$HASH\n" > $CURRENTBLOCK.hash
         rm -f $CURRENTBLOCK.wip
         rm -f $CURRENTBLOCK
 
@@ -250,6 +255,7 @@ mine () {
 
 mineGenesis () {
         commandCode=$(mapFunction2Code ${FUNCNAME[0]})
+        errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
         # first check to see if there is a blockchain already, if so exit so we don't overwrite
         [[ -f 1.blk.solved ]] && echo "A mined Genesis block already exists in this folder!" && exit 1
 
@@ -284,6 +290,8 @@ mineGenesis () {
 
 checkAccountBal () {
         commandCode=$(mapFunction2Code ${FUNCNAME[0]})
+        errorCode=$(mapFunction2Code ${FUNCNAME[0]})
+        errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
         fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
         ACCTNUM=$(echo ${jsonMessage}  | jq -r '.ACCTNUM')
         #ACCTNUM=$1
@@ -345,6 +353,7 @@ checkAccountBal () {
 
 
 getTransactionMessageForSign() {
+        errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
         commandCode=$(mapFunction2Code ${FUNCNAME[0]})
         #fromSocket=$(echo ${jsonMessage}  | jq -r '.getTransactionMessageForSign')
         fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID'|sed "s/\"//g")
@@ -379,7 +388,7 @@ getTransactionMessageForSign() {
         TOTAL=$(checkAccountBal \'{"command":"checkbalance","ACCTNUM":"$SENDER"} \' |  jq '.result'  | jq '.balance'| sed "s/\"//g")
 
         [[ $AMOUNT -gt $TOTAL ]] &&
-        echo "{ \"command\":\"getTransactionMessageForSign\",\"messageType\":\"direct\",\"commandCode\":\"$commandCode\",\"status\":2,\"destinationSocket\":\"$fromSocket\",\"SENDER\":\"$SENDER\",\"result\":{\"description\":\"Insufficient Funds!\"}}" && exit 1
+        echo "{ \"command\":\"getTransactionMessageForSign\",\"messageType\":\"direct\",\"commandCode\":\"$errorCode\",\"status\":2,\"destinationSocket\":\"$fromSocket\",\"SENDER\":\"$ACCTNUM\",\"message\":\"Insufficient Funds!\"}" && exit 1
         
         dateTime=$DATEEE
 
@@ -396,6 +405,7 @@ getTransactionMessageForSign() {
 
 validate() {
         fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID'|sed "s/\"//g")
+        errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
         # Check that there are blocks to validate
         NUMSOLVEDFILES=`ls -1 *.solved | wc -l`
         (( $NUMSOLVEDFILES < 1 )) && echo "Blockchain must be greater than 1 block to validate" && exit 1
@@ -464,15 +474,18 @@ case "$command" in
         getTransactionMessageForSign)
                         shift
                         getTransactionMessageForSign $@
+                        exit 0
                         ;;
         provideBlocks)
                         #shift
                         provideBlocks $@
+                        exit 0
                         ;;
         AddBlockFromNetwork)
                         #shift
                         AddBlockFromNetwork $@
                         validate
+                        exit 0
                         ;;
         pushSignedMessageToPending)
                         pushSignedMessageToPending $@

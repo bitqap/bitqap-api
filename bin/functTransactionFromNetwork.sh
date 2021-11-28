@@ -19,16 +19,25 @@ pushSignedMessageToPending() {
     ## 3. Sign and send back                                                                ##
     ##########################################################################################
     commandCode=$(mapFunction2Code ${FUNCNAME[0]})
+    errorCode=$(mapFunction2Code ${FUNCNAME[0]})
     fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
     commandCode=$(mapFunction2Code ${FUNCNAME[0]})
+    errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
     forReciverData=$(echo ${jsonMessage} | jq -r '.result' | jq -r '.forReciverData')
     forSenderData=$( echo ${jsonMessage} | jq -r '.result' | jq -r '.forSenderData')
     ## here we can validate it first before pushing to Pending Transaction
-    validateTransactionMessage $forReciverData && validateTransactionMessage $forSenderData
-    echo "$forReciverData" >> blk.pending      && echo "$forSenderData"  >> blk.pending
-    if [ $? -eq 0 ]; then
-        echo "{'command':'pushSignedMessageToPending',\"commandCode\":\"$commandCode\",'status':0,\"messageType\":\"direct\",\"destinationSocket\":$fromSocket,\"commandCode\":\"$commandCode\"}"
-        echo "{'command':'notification','status':0,\"commandCode\":\"$commandCode\",\"messageType\":\"broadcast\",\"exceptSocket\":$fromSocket,\"commandCode\":\"$commandCode\"}"
-    fi
+    txIDReciever=$(echo ${forReciverData}| awk -v FS=':' '{print $1}')
+    txIDSender=$(  echo ${forSenderData} | awk -v FS=':' '{print $1}')
+    recordExist=$(cat ${blk.pending}     | grep  "$txIDReciever\|$txIDSender")
+    if [ ${#recordExist} -ge 5 ]; then 
+        validateTransactionMessage $forReciverData && validateTransactionMessage $forSenderData
+        echo "$forReciverData" >> blk.pending      && echo "$forSenderData"  >> blk.pending
+        if [ $? -eq 0 ]; then
+                echo "{'command':'pushSignedMessageToPending',\"commandCode\":\"$commandCode\",'status':0,\"messageType\":\"direct\",\"destinationSocket\":$fromSocket,\"commandCode\":\"$commandCode\"}"
+                echo "{'command':'notification','status':0,\"commandCode\":\"$commandCode\",\"messageType\":\"broadcast\",\"exceptSocket\":$fromSocket,\"commandCode\":\"$commandCode\"}"
+        fi
+     else
+        echo "{'command':'pushSignedMessageToPending',\"commandCode\":\"$errorCode\",'status':2,\"messageType\":\"direct\",\"destinationSocket\":$fromSocket,\"commandCode\":\"$commandCode\"}"
+     fi
 }
 
