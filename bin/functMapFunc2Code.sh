@@ -5,7 +5,6 @@ mapFunction2Code () {
         # this function will be used on Notification. in "notification" command bashCoin.sh don't do anything.
         # because of command bashCoin return command itself on result. 
         # But code will help us to execute some action.
-
         funcName=$1
         type=$2
         case "$funcName" in 
