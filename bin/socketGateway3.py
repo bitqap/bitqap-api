@@ -9,7 +9,6 @@ import logging
 import traceback
 import requests
 
-
 threads = []
 clients = {}
 

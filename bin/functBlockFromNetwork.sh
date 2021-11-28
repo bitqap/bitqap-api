@@ -1,6 +1,6 @@
 
 listNewBlock() {
-        commandCode=$(mapFunction2Code ${FUNCNAME[0]})
+        commandCode=$(mapFunction2Code ${FUNCNAME[0]} code)
         errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
         fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
         fromBlockID=$(echo ${jsonMessage}  | jq -r '.fromBlockID')
@@ -56,7 +56,7 @@ checkBlockSignature() {
 
 
 provideBlocks() {
-        commandCode=$(mapFunction2Code ${FUNCNAME[0]})
+        commandCode=$(mapFunction2Code ${FUNCNAME[0]} code)
         errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
         fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
         blockMessage="["
@@ -85,7 +85,7 @@ removeTransactionsFromPending() {
 }
 
 AddBlockFromNetwork() {
-        commandCode=$(mapFunction2Code ${FUNCNAME[0]})
+        commandCode=$(mapFunction2Code ${FUNCNAME[0]} code)
         errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
         # get file by BASE64 format.
         fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')

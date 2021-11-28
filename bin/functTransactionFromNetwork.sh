@@ -18,7 +18,7 @@ pushSignedMessageToPending() {
     ## 2. add TX:Hash sha256 (message)                                                      ##
     ## 3. Sign and send back                                                                ##
     ##########################################################################################
-    commandCode=$(mapFunction2Code ${FUNCNAME[0]})
+    commandCode=$(mapFunction2Code ${FUNCNAME[0]} code)
     errorCode=$(mapFunction2Code ${FUNCNAME[0]})
     fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
     commandCode=$(mapFunction2Code ${FUNCNAME[0]})

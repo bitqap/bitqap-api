@@ -2,7 +2,7 @@
 
         version=1.2.2.5
         ## description (Interface message change to JSON. make messages competable with WebSocket)
-        REWARD_COIN=2
+        REWARD_COIN=1
 
 ####       Set difficulty #####################################
 # Set to number of 0's that starts hash.
@@ -201,7 +201,7 @@ buildWIPBlock () {
 
 
 mine () {
-        commandCode=$(mapFunction2Code ${FUNCNAME[0]})
+        commandCode=$(mapFunction2Code ${FUNCNAME[0]} code)
         errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
         ## ADD CONTROL. THIS MESSAGE SHOULD COME FROM INTERNAL IP ADDRESS. (MINER GUI)
         ## THIS MESSAGE IS BROADCAST
@@ -254,7 +254,7 @@ mine () {
 }
 
 mineGenesis () {
-        commandCode=$(mapFunction2Code ${FUNCNAME[0]})
+        commandCode=$(mapFunction2Code ${FUNCNAME[0]} code)
         errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
         # first check to see if there is a blockchain already, if so exit so we don't overwrite
         [[ -f 1.blk.solved ]] && echo "A mined Genesis block already exists in this folder!" && exit 1
@@ -289,7 +289,7 @@ mineGenesis () {
 
 
 checkAccountBal () {
-        commandCode=$(mapFunction2Code ${FUNCNAME[0]})
+        commandCode=$(mapFunction2Code ${FUNCNAME[0]} code)
         errorCode=$(mapFunction2Code ${FUNCNAME[0]})
         errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
         fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
@@ -353,8 +353,8 @@ checkAccountBal () {
 
 
 getTransactionMessageForSign() {
-        errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
-        commandCode=$(mapFunction2Code ${FUNCNAME[0]})
+        errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]} )
+        commandCode=$(mapFunction2Code ${FUNCNAME[0]} code)
         #fromSocket=$(echo ${jsonMessage}  | jq -r '.getTransactionMessageForSign')
         fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID'|sed "s/\"//g")
         SENDER=$(echo ${jsonMessage}  | jq -r '.ACCTNUM'|sed "s/\"//g")
