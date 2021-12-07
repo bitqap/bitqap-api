@@ -28,10 +28,6 @@ mapFunction2Code () {
                                 code=202
                                 name=pushSignedMessageToPending
                                 ;;
-                AddBlockFromNetwork|302)
-                                code=302
-                                name=AddBlockFromNetwork
-                                ;;
                 listNewBlock|300)
                                 code=300
                                 name=listNewBlock
@@ -40,9 +36,17 @@ mapFunction2Code () {
                                 code=301
                                 name=provideBlocks
                                 ;;
+                getNewBlockFromNode|302)
+                                code=302
+                                name=getNewBlockFromNode
+                                ;;
                 updateNetworkInfo|401)
                                 code=401
                                 name=updateNetworkInfo
+                                ;;
+                doNothing)
+                                code=001
+                                name=doNothing
                                 ;;
                 *)
                                 code=000

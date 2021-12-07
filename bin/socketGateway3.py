@@ -16,10 +16,10 @@ clients = {}
 #   {"command":"notification","messageType":"direct"}
 #   {"command":"checkbalance","ACCTNUM":"50416596951b715b7e8e658de7d9f751fb8b97ce4edf0891f269f64c8fa8e034","messageType":"direct"}
 #   {"command":"listNewBlock","fromBlockID":70,"messageType":"direct"}
-#   {"command":"provideBlocks","messageType":"direct","blockList": ["blk.pending","133.blk.solved","132.blk.solved","131.blk.solved"]}
-#   {"command":"AddBlockFromNetwork","messageType":"direct","blockList": ["base64","base64"]}
+#   {"command":"provideBlocks","messageType":"direct","result": ["blk.pending","133.blk.solved","132.blk.solved","131.blk.solved"]}
+#   {"command":"AddBlockFromNetwork","messageType":"direct","result": ["base64","base64"]}
 #   {"command":"getTransactionMessageForSign","messageType":"direct","ACCTNUM":"50416596951b715b7e8e658de7d9f751fb8b97ce4edf0891f269f64c8fa8e034","RECEIVER":"b1bd54c941aef5e0096c46fd21d971b3a3cf5325226afb89c0a9d6845a491af6","AMOUNT":5,"FEE":3,"DATEEE":"202111121313"}
-#   {"command":"pushSignedMessageToPending", "messageType": "direct", "result": {"forReciverData": "50416596951b715b7e8e658de7d9f751fb8b97ce4edf0891f269f64c8fa8e034:b1bd54c941aef5e0096c46fd21d971b3a3cf5325226afb89c0a9d6845a491af6:5:3:202111121313", "forSenderData": "50416596951b715b7e8e658de7d9f751fb8b97ce4edf0891f269f64c8fa8e034:50416596951b715b7e8e658de7d9f751fb8b97ce4edf0891f269f64c8fa8e034:38:0:202111121313"}}
+#   {"command":"pushSignedMessageToPending", "messageType": "direct", "result": ["50416596951b715b7e8e658de7d9f751fb8b97ce4edf0891f269f64c8fa8e034:b1bd54c941aef5e0096c46fd21d971b3a3cf5325226afb89c0a9d6845a491af6:5:3:202111121313","50416596951b715b7e8e658de7d9f751fb8b97ce4edf0891f269f64c8fa8e034:50416596951b715b7e8e658de7d9f751fb8b97ce4edf0891f269f64c8fa8e034:38:0:202111121313"]}
 #   {"command":"validate"} // CLI
 
 
@@ -46,6 +46,8 @@ def client_left(client, server):
     msg = {'message':"client left"}
     try:
         clients.pop(client['id'])
+        ### BU LAZIMDI KI, PORTU DA ELAVE EDESEN. SILENDE LAZIM OLACAQ. 
+        #allConnected.pop([selfIPaddress,client['address'][0]])
     except:
         print ("Error in removing client %s" % client['id'])
     for cl in clients.values():
@@ -76,8 +78,8 @@ def new_client1(client, server):
 
 def msg_received(client, server, msg):
     # Handle messages routing between clients
+    global destination
     if msg != "":
-        print ("Message is: "+str(msg))
         try:
             msg=json.loads(str(msg).encode('utf-8'))
             ## this is inital for communication_pipe client
@@ -89,24 +91,22 @@ def msg_received(client, server, msg):
                     # this message comes from bashCoin.sh. Becasue SH script sets destinationSocket based on SocketID.
                     destination=msg['destinationSocket']
                 else:
+                    # Possible come from local SH
                     if msg['messageType']=='broadcast':
-                        ## MAKE THIT BY SECRET FILE CODE
+                        ## MAKE THIS BY SECRET FILE CODE
                         # python3 wsdump.py  -r --text '{"command":"nothing","appType":"nothing","destinationSocketBashCoin":"yes"}' ws://127.0.0.1:8001
-                        if 'exceptSocket' in msg:
-                            exceptID=msg['exceptSocket']
-                        else:
-                            exceptID=WhereBashCoin(clients,'destinationSocketBashCoin','yes','id')
                         for i in clients:
-                            if clients[i]['id'] != WhereBashCoin(clients,'destinationSocketBashCoin','yes','id') or clients[i]['id']!=exceptID :
+                            if clients[i]['id'] != WhereBashCoin(clients,'destinationSocketBashCoin','yes','id'):
+                                # message will not go to SH
                                 server.send_message(clients[i], str(msg).replace("u'","'").replace("'","\""))
                     else:
-                        # if message come from inside (no destination set) and message type is not 'broadcast' then 
-                        # all messages goes to local SH
-                        # also sets socketID for SH parse it (for sender)
+                        # messageType=direct and comes from Local (getRoot) means to SH
+                        # put socketID to be able for get response by SH
                         destination=WhereBashCoin(clients,'destinationSocketBashCoin','yes','id')
-                        msg.update({'socketID':client['id']})
-                cl = clients[int(destination)]
+                        msg.update({'socketID':client['id']})     ## if needed. this will be controlled by bashCoin.sh (messageType)
+                cl = clients[destination]
                 print ("Iceriden cole "+str(cl)+" message: "+str(msg))
+                print ("Bash execuring from session id: "+str(WhereBashCoin(clients,'destinationSocketBashCoin','yes','id')))
                 server.send_message(cl, str(msg).replace("u'","'").replace("'","\""))
             else:
             ################################### MESAGE FROM EXTERNAL ########################
