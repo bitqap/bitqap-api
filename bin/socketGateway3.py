@@ -23,6 +23,11 @@ clients = {}
 #   {"command":"validate"} // CLI
 
 
+# This list for build connected device list,
+#  client Graph algo will find whether it can reach main network or not.
+selfIPaddress = requests.get('https://checkip.amazonaws.com').text.strip()
+allConnected=[]
+
 def getRoot():
     result=''
     locals=[]
@@ -53,10 +58,6 @@ def client_left(client, server):
     for cl in clients.values():
         server.send_message(cl, str(msg))
 
-
-# This list for build connected device list. Client Graph algo will find whether it can reach main network or not.
-selfIPaddress = requests.get('https://checkip.amazonaws.com').text.strip()
-allConnected=[]
 
 def new_client(client, server):
     # connection list
@@ -89,9 +90,10 @@ def msg_received(client, server, msg):
             ################################# MESAGE FROM LOCALHOST  #################################
                 if 'destinationSocket' in msg:
                     # this message comes from bashCoin.sh. Becasue SH script sets destinationSocket based on SocketID.
+                    #  and socketID setting by this script before sending to client[]
                     destination=msg['destinationSocket']
                 else:
-                    # Possible come from local SH
+                    # Usually comes from local SH 
                     if msg['messageType']=='broadcast':
                         ## MAKE THIS BY SECRET FILE CODE
                         # python3 wsdump.py  -r --text '{"command":"nothing","appType":"nothing","destinationSocketBashCoin":"yes"}' ws://127.0.0.1:8001
@@ -105,13 +107,14 @@ def msg_received(client, server, msg):
                         # put socketID to be able for get response by SH
                         destination=WhereBashCoin(clients,'destinationSocketBashCoin','yes','id')
                         msg.update({'socketID':client['id']})
-                        cl = clients[destination]
-                        print ("002 TO -> "+str(clients[destination]['id'])+"\n"+"MSG -> "+str(msg))
-                        server.send_message(cl, str(msg).replace("u'","'").replace("'","\""))
+                    # track message destination
+                    print ("002 TO -> "+str(destination)+"\n"+"MSG -> "+str(msg))
+                    cl = clients[destination]
+                    server.send_message(cl, str(msg).replace("u'","'").replace("'","\""))
             else:
             ################################### MESAGE FROM EXTERNAL ########################
                 ## SECURITY: put command list from external to internal.
-                if msg['command'] in ['help','AddBlockFromNetwork','provideBlocks','notification','nothing','listNewBlock','getTransactionMessageForSign','checkbalance','pushSignedMessageToPending','price']:
+                if msg['command'] in ['help','getNewBlockFromNode','provideBlocks','notification','nothing','listNewBlock','getTransactionMessageForSign','checkbalance','pushSignedMessageToPending','price']:
                     # socketID is message originator always
                     msg.update({'socketID':client['id']})
                     if msg['messageType']=='direct':
@@ -121,8 +124,9 @@ def msg_received(client, server, msg):
                     if msg['messageType']=='broadcast':
                         ## THIS IS DANGER. NEED TO CONTROL MESSAGE CONTENT not to Broadcast
                         for i in clients:
-                            ## send to all except source
+                            ## send to all except message originator
                             if clients[i]['id'] != msg['socketID']:
+                                # track message destination
                                 print ("004 TO -> "+str(clients[i]['id'])+"\n"+"MSG -> "+str(msg))
                                 server.send_message(clients[i], str(msg).replace("u'","'").replace("'","\""))
         except Exception as e:

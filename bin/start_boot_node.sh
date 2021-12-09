@@ -7,11 +7,11 @@
 . ../config/config.ini
 
 ## INITIALIZE
+rm -rf $NAMED_PIPE_BSH
+mkfifo $NAMED_PIPE_BSH
 [ ! -p $NAMED_PIPE_BSH ] && mkfifo $NAMED_PIPE_BSH
-[ ! -p $NAMED_PIPE_EXT ] && mkfifo $NAMED_PIPE_EXT
 
 # create independend strem (FILE DESCRIPTOR)
-exec 3<> $NAMED_PIPE_EXT
 exec 3<> $NAMED_PIPE_BSH
 
 main() {

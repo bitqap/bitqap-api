@@ -48,6 +48,10 @@ mapFunction2Code () {
                                 code=001
                                 name=doNothing
                                 ;;
+                help)
+                                code=002
+                                name=help
+                                ;;
                 *)
                                 code=000
                                 ;;
@@ -87,9 +91,9 @@ mapERRORFunction2Code () {
                                 code=512
                                 name=pushSignedMessageToPending
                                 ;;
-                AddBlockFromNetwork)
+                getNewBlockFromNode)
                                 code=520
-                                name=AddBlockFromNetwork
+                                name=getNewBlockFromNode
                                 ;;
                 listNewBlock)
                                 code=521

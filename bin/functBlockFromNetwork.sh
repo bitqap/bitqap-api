@@ -120,9 +120,10 @@ getNewBlockFromNode() {
             echo date > $tempRootFolder/0003
             # STARTING NEW LOOP to read all TX
             validateTransactionMessage $line
-            [ $? -ne 0 ] && 
-                echo "{\"command\":\"$command\",\"status\":3,\"message\":\"Some transactions cannot be validated. it is destroy whole signature of block\"}" &&  
+            if [ $? -ne 0 ]; then
+                echo "{\"command\":\"$command\",\"status\":3,\"message\":\"Some transactions cannot be validated. it is destroy whole signature of block\"}" 
                 exit 1
+            fi
             done
     done
 
@@ -138,16 +139,18 @@ getNewBlockFromNode() {
         echo date > $tempRootFolder/0005
         validateNetworkBlockHash "$blocksTemp"
         ret=$?
-        ecoh $ret > $tempRootFolder/ret
+        ecoh $ret > $tempRootFolder/00_ret
             if [ $ret -eq 0 ]; then
                 echo date > $tempRootFolder/0007
                 blocks=$(ls ${blocksTemp}/*blk.solved*)
                 removeTransactionsFromPending $blocks
                 mv $blocksTemp/*blk* $BLOCKPATH/
-                echo "{\"command\":\"notification\",\"status\":0,\"commandCode\":\"001\",\"messageType\":\"broadcast\",\"result\":[$results]}"
+                #msg=$(echo "{\"command\":\"notification\",\"status\":0,\"commandCode\":\"302\",\"messageType\":\"broadcast\",\"result\":[$results]}"| tr '\n' ' ' | sed 's/ //g' )
+                echo "{\"command\":\"notification\",\"status\":0,\"commandCode\":\"302\",\"messageType\":\"broadcast\",\"result\":[\"done\"]}"
             fi
     else
-            echo "{\"command\":\"getNewBlockFromNode\",\"commandCode\":\"$errorCode\",\"messageType\":\"direct\",\"status\":"2",\"destinationSocket\":\"$fromSocket\",\"message\":\"Function: validateNetworkBlockHash , Folder:$blocksTemp, firstFileNetwID=$firstFileNetwID and lastFileCurrIDplus1=$lastFileCurrIDplus1 Chain ID $BlockID is not matching\"}"
+            echo "{\"command\":\"getNewBlockFromNode\",\"commandCode\":\"$errorCode\",\"messageType\":\"broadcast\",\"status\":"2",\"message\":\"Function: validateNetworkBlockHash , Folder:$blocksTemp, firstFileNetwID=$firstFileNetwID and lastFileCurrIDplus1=$lastFileCurrIDplus1 Chain ID $BlockID is not matching\"}"
+            exit 1
     fi
 
     # rm -rf $blocksTemp

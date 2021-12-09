@@ -17,6 +17,6 @@ notification() {
         
         # THIS MESSAGE SHOULD BE ROUTED TO LOCAL BASHCOIN.SH script. So, no need to define destinatioSockey ket in message.
         # Teorically this message cannot be routed itself. 
-        msgTrimmed=$(echo "{\"command\":\"$command\",\"addionalinfo\":\"$(pwd)\",\"messageType\":\"direct\",\"result\":$result}" | tr '\n' ' ' | sed 's/ //g')
+        msgTrimmed=$(echo "{\"command\":\"$command\",\"commandKodu\":$commandCode,\"addionalinfo\":\"$(pwd)\",\"messageType\":\"direct\",\"result\":$result}" | tr '\n' ' ' | sed 's/ //g')
         echo $msgTrimmed
 }

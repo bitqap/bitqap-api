@@ -431,7 +431,7 @@ case "$command" in
                         exit 1
                         ;;
         *)
-                        echo "{\"command\":\"help\",\"description\":\"get more detail from https://bitqap.github.io/info\",\"messageType\":\"direct\"}"
+                        echo "{\"command\":\"doNothing\",\"description\":\"get more detail from https://bitqap.github.io/info\",\"messageType\":\"direct\"}"
                         ;;
 esac
 
