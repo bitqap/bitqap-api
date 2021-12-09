@@ -98,16 +98,16 @@ def msg_received(client, server, msg):
                         for i in clients:
                             if clients[i]['id'] != WhereBashCoin(clients,'destinationSocketBashCoin','yes','id'):
                                 # message will not go to SH
+                                print ("001 TO -> "+str(clients[i]['id'])+"\n"+"MSG -> "+str(msg))
                                 server.send_message(clients[i], str(msg).replace("u'","'").replace("'","\""))
                     else:
                         # messageType=direct and comes from Local (getRoot) means to SH
                         # put socketID to be able for get response by SH
                         destination=WhereBashCoin(clients,'destinationSocketBashCoin','yes','id')
-                        msg.update({'socketID':client['id']})     ## if needed. this will be controlled by bashCoin.sh (messageType)
-                cl = clients[destination]
-                print ("Iceriden cole "+str(cl)+" message: "+str(msg))
-                print ("Bash execuring from session id: "+str(WhereBashCoin(clients,'destinationSocketBashCoin','yes','id')))
-                server.send_message(cl, str(msg).replace("u'","'").replace("'","\""))
+                        msg.update({'socketID':client['id']})
+                        cl = clients[destination]
+                        print ("002 TO -> "+str(clients[destination]['id'])+"\n"+"MSG -> "+str(msg))
+                        server.send_message(cl, str(msg).replace("u'","'").replace("'","\""))
             else:
             ################################### MESAGE FROM EXTERNAL ########################
                 ## SECURITY: put command list from external to internal.
@@ -116,14 +116,14 @@ def msg_received(client, server, msg):
                     msg.update({'socketID':client['id']})
                     if msg['messageType']=='direct':
                         ## MAKE THIS BY SECRET FILE CODE
+                        print ("003 TO -> "+str(WhereBashCoin(clients,'destinationSocketBashCoin','yes','id'))+"\n"+"MSG -> "+str(msg))
                         server.send_message(clients[WhereBashCoin(clients,'destinationSocketBashCoin','yes','id')], str(msg).replace("u'","'").replace("'","\""))
                     if msg['messageType']=='broadcast':
                         ## THIS IS DANGER. NEED TO CONTROL MESSAGE CONTENT not to Broadcast
                         for i in clients:
-                            print ("i is: "+str(i)+" i++ is: "+str(i+1))
                             ## send to all except source
                             if clients[i]['id'] != msg['socketID']:
-                                print ("mesage getmelidi bura: "+str(clients[i]))
+                                print ("004 TO -> "+str(clients[i]['id'])+"\n"+"MSG -> "+str(msg))
                                 server.send_message(clients[i], str(msg).replace("u'","'").replace("'","\""))
         except Exception as e:
             logging.error(traceback.format_exc())

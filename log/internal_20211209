@@ -1,0 +1,18 @@
+Thu Dec  9 07:44:59 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "peers": [["161.97.69.136", "127.0.0.1"]]}' > communicate_pipe
+Thu Dec  9 07:47:30 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "peers": [["161.97.69.136", "127.0.0.1"]]}' > communicate_pipe
+Thu Dec  9 07:48:20 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Thu Dec  9 07:48:24 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Thu Dec  9 07:48:26 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Thu Dec  9 07:48:26 UTC 2021|error|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Thu Dec  9 07:49:56 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "peers": [["161.97.69.136", "127.0.0.1"], ["161.97.69.136", "127.0.0.1"], ["161.97.69.136", "127.0.0.1"]]}' > communicate_pipe
+Thu Dec  9 07:49:56 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 3}' > communicate_pipe
+Thu Dec  9 07:50:05 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 4}' > communicate_pipe
+Thu Dec  9 07:50:12 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 4}' > communicate_pipe
+Thu Dec  9 07:51:05 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 4}' > communicate_pipe
+Thu Dec  9 07:51:10 UTC 2021|error|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 4}' > communicate_pipe
+Thu Dec  9 07:53:14 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "peers": [["161.97.69.136", "127.0.0.1"], ["161.97.69.136", "127.0.0.1"], ["161.97.69.136", "127.0.0.1"], ["161.97.69.136", "127.0.0.1"], ["161.97.69.136", "127.0.0.1"], ["161.97.69.136", "127.0.0.1"], ["161.97.69.136", "127.0.0.1"]]}' > communicate_pipe
+Thu Dec  9 07:53:14 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 7}' > communicate_pipe
+Thu Dec  9 07:53:21 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 8}' > communicate_pipe
+Thu Dec  9 07:53:22 UTC 2021|error|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 8}' > communicate_pipe
+Thu Dec  9 08:14:09 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "peers": [["161.97.69.136", "127.0.0.1"]]}' > communicate_pipe
+Thu Dec  9 08:14:09 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe

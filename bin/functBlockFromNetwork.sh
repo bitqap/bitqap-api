@@ -35,9 +35,9 @@ validateNetworkBlockHash() {
                         j=`ls -1 | egrep "solved$|blk$" | sort -n| grep -A 1 $i | head -2| grep -v $i | tail -1`
                         CALCHASH=`sed "2c$PREVHASH" $i | md5sum | cut -d" " -f1`
                         REPORTEDHASH=`sed -n '2p' $j`
-                        [[ $CALCHASH != $REPORTEDHASH ]] &&  
-                        echo "{\"command\": \"validateNetworkBlockHash\",\"commandCode\":\"$errorCode\",\"messageType\":\"direct\",\"destinationSocket\": \"$fromSocket\",\"status\": \"2\",\"message\":\"FFFFx0 Hash mismatch!  $i has changed!  Do not trust any block after and including $i\"}"
-                        exit 1
+                        [[ $CALCHASH != $REPORTEDHASH ]] && 
+                            echo "{\"command\": \"validateNetworkBlockHash\",\"commandCode\":\"$errorCode\",\"messageType\":\"direct\",\"destinationSocket\": \"$fromSocket\",\"status\": \"2\",\"message\":\"FFFFx0 Hash mismatch!  $i has changed!  Do not trust any block after and including $i\"}" && 
+                            exit 1
         done
         cd $curr
 }
@@ -104,7 +104,7 @@ getNewBlockFromNode() {
             mv $blocksTemp/$count.blk $blocksTemp/$BlockID
         fi
         
-        if [ $(cat ${blocksTemp}/${count}.blk | wc -l) -eq 3 ] && [[ $(cat ${blocksTemp}/${count}.blk | grep "Previous Block Hash") ]]; then
+        if [ -f ${blocksTemp}/${count}.blk ] && [ $(cat ${blocksTemp}/${count}.blk | wc -l) -eq 3 ] && [[ $(cat ${blocksTemp}/${count}.blk | grep "Previous Block Hash") ]]; then
             continue
         fi
 
@@ -133,7 +133,6 @@ getNewBlockFromNode() {
     ## change blk file to current+1 for validataion chain
     [ $(ls ${blocksTemp}/*.blk | wc -l) -eq 1 ] && mv ${blocksTemp}/*.blk ${blocksTemp}/$(expr ${comingNtwrkBlockID} + 1).blk || exit 1
 
-    echo "$(date)" > $tempRootFolder/0004
 
     if [ "$expcetedNtwrkBlockID" == "$comingNtwrkBlockID" ];then
         echo date > $tempRootFolder/0005
@@ -144,7 +143,7 @@ getNewBlockFromNode() {
                 echo date > $tempRootFolder/0007
                 blocks=$(ls ${blocksTemp}/*blk.solved*)
                 removeTransactionsFromPending $blocks
-                mv $blocksTemp/*blk.solved $BLOCKPATH/
+                mv $blocksTemp/*blk* $BLOCKPATH/
                 echo "{\"command\":\"notification\",\"status\":0,\"commandCode\":\"001\",\"messageType\":\"broadcast\",\"result\":[$results]}"
             fi
     else

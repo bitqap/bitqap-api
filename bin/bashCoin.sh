@@ -1,36 +1,6 @@
 #!/bin/bash
 
-        version=1.2.2.5
-        ## description (Interface message change to JSON. make messages competable with WebSocket)
-        REWARD_COIN=1
-
-####       Set difficulty #####################################
-# Set to number of 0's that starts hash.
-# 1 = Easy, 2 = Not bad, > 3 = Difficult
-        DIFF=1
-
-## Set Nonce ##########################################
-# Number at which to start guessing the nonce
-# No reason to change
-        NONCE=0
-
-## Other Variables ####################################
-# Leave alone
-        ZEROS=ff
-        DIFFPLUS=1
-        DIFFZEROS=0
-
-## key Variables
-        ROOTDIR="/root/bashCo1"
-        #CURR=$(pwd)
-        privateKeyFile="$ROOTDIR/cert/example.com.key"
-        publicKeyFile="$ROOTDIR/cert/example.com.pub"
-        BLOCKPATH="$ROOTDIR/data/blocks"
-        FSDATABASE="$ROOTDIR/data/fsDB/"
-        tempRootFolder=$ROOTDIR/temp
-
-# mine top
-        topHighFeeTransactions=100
+. ../config/config.ini
 
 ## init
 cd $BLOCKPATH
