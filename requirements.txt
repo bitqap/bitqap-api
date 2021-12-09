@@ -1,3 +1,2 @@
 websocket_server
-miniupnpc
 websocket_clients
