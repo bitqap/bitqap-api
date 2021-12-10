@@ -212,7 +212,10 @@ mine () {
 
         NEXT_BASE64=$(cat ${NEXTBLOCK}| base64 |tr '\n' ' ' | sed 's/ //g')
         CURRENTBLOCK_BASE64=$(cat ${CURRENTBLOCK}.solved | base64 |tr '\n' ' ' | sed "s/ //g")
-        echo "{\"command\":\"notification\",\"commandCode\":\"302\",\"ttttt\":\"minerden gelir\",\"appType\":\"$appType\",\"messageType\":\"broadcast\",\"status\":\"0\", \"result\":[\"$CURRENTBLOCK_BASE64\",\"$NEXT_BASE64\"]}"
+        #echo "{\"command\":\"notification\",\"commandCode\":\"302\",\"appType\":\"$appType\",\"messageType\":\"broadcast\",\"status\":\"0\", \"result\":[\"$CURRENTBLOCK_BASE64\",\"$NEXT_BASE64\"]}"
+        # send askBlockContent 
+        echo "{\"command\":\"notification\",\"commandCode\":\"303\",\"appType\":\"$appType\",\"messageType\":\"broadcast\",\"status\":\"0\", \"result\":[{\"ID\":\"${CURRENTBLOCK}.solved\",\"hash\":\"$HASH\"}]}"
+
         rm -f $CURRENTBLOCK.wip
         rm -f $CURRENTBLOCK
 }
@@ -261,7 +264,7 @@ checkAccountBal () {
         #ACCTNUM=$1
         #return_row=$2
         # Get the value of the last change transaction (the last time a user sent money back to themselves) if it exists
-        for i in `ls *blk* -1| sort -nr`; do
+        for i in `ls *blk* -1 | grep -v exipred| sort -nr`; do
                         LASTCHANGEBLK=`grep -l -m 1 .*:$ACCTNUM:$ACCTNUM:.* $i`
                         [[ $LASTCHANGEBLK ]] && break
         done
@@ -298,7 +301,7 @@ checkAccountBal () {
         [[ `grep .*:.*:$ACCTNUM:.* $i` ]] && SUM=$SUM+`grep .*:.*[^$ACCTNUM]*:$ACCTNUM:.* $i | cut -d":" -f4 | paste -sd+ | bc` || SUM=$SUM+0
       done
                         else
-                                        for i in `ls -1 *blk*| sort -n | sed "1,/$LASTCHANGEBLK/d"`; do
+                                        for i in `ls -1 *blk*| grep -v expired| sort -n | sed "1,/$LASTCHANGEBLK/d"`; do
         [[ `grep .*:.*:$ACCTNUM:.* $i` ]] && SUM=$SUM+`grep .*:.*[^$ACCTNUM]*:$ACCTNUM:.* $i | cut -d":" -f4 | paste -sd+ | bc` || SUM=$SUM+0
       done
         fi
@@ -386,7 +389,6 @@ case "$command" in
                         exit 0
                         ;;
         listNewBlock)
-                        shift
                         listNewBlock $@
                         exit 0
                         ;;
@@ -395,14 +397,12 @@ case "$command" in
                         getTransactionMessageForSign $@
                         exit 0
                         ;;
-        provideBlocks)
-                        #shift
-                        provideBlocks $@
+        provideBlockContent)
+                        provideBlockContent $@
                         exit 0
                         ;;
-        getNewBlockFromNode)
-                        #shift
-                        getNewBlockFromNode $@
+        AddNewBlockFromNode)
+                        AddNewBlockFromNode $@
                         validate
                         exit 0
                         ;;

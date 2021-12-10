@@ -95,22 +95,26 @@ def msg_received(client, server, msg):
                 else:
                     # Usually comes from local SH 
                     if msg['messageType']=='broadcast':
+                        if 'exceptSocket' in msg:
+                            exceptID=msg['exceptSocket']
+                        else:
+                            exceptID=WhereBashCoin(clients,'destinationSocketBashCoin','yes','id')
                         ## MAKE THIS BY SECRET FILE CODE
                         # python3 wsdump.py  -r --text '{"command":"nothing","appType":"nothing","destinationSocketBashCoin":"yes"}' ws://127.0.0.1:8001
                         for i in clients:
-                            if clients[i]['id'] != WhereBashCoin(clients,'destinationSocketBashCoin','yes','id'):
+                            if clients[i]['id'] != WhereBashCoin(clients,'destinationSocketBashCoin','yes','id') or clients[i]['id'] != exceptID:
                                 # message will not go to SH
-                                print ("001 TO -> "+str(clients[i]['id'])+"\n"+"MSG -> "+str(msg))
+                                print ("\n 001 TO -> "+str(clients[i]['id'])+" and exceptID is "+str(exceptID)+"\n"+"MSG -> "+str(msg))
                                 server.send_message(clients[i], str(msg).replace("u'","'").replace("'","\""))
                     else:
                         # messageType=direct and comes from Local (getRoot) means to SH
                         # put socketID to be able for get response by SH
                         destination=WhereBashCoin(clients,'destinationSocketBashCoin','yes','id')
                         msg.update({'socketID':client['id']})
-                    # track message destination
-                    print ("002 TO -> "+str(destination)+"\n"+"MSG -> "+str(msg))
-                    cl = clients[destination]
-                    server.send_message(cl, str(msg).replace("u'","'").replace("'","\""))
+                        # track message destination
+                        print ("\n 002 TO -> "+str(destination)+"\n"+"MSG -> "+str(msg))
+                        cl = clients[destination]
+                        server.send_message(cl, str(msg).replace("u'","'").replace("'","\""))
             else:
             ################################### MESAGE FROM EXTERNAL ########################
                 ## SECURITY: put command list from external to internal.
@@ -119,7 +123,7 @@ def msg_received(client, server, msg):
                     msg.update({'socketID':client['id']})
                     if msg['messageType']=='direct':
                         ## MAKE THIS BY SECRET FILE CODE
-                        print ("003 TO -> "+str(WhereBashCoin(clients,'destinationSocketBashCoin','yes','id'))+"\n"+"MSG -> "+str(msg))
+                        print ("\n 003 TO -> "+str(WhereBashCoin(clients,'destinationSocketBashCoin','yes','id'))+"\n"+"MSG -> "+str(msg))
                         server.send_message(clients[WhereBashCoin(clients,'destinationSocketBashCoin','yes','id')], str(msg).replace("u'","'").replace("'","\""))
                     if msg['messageType']=='broadcast':
                         ## THIS IS DANGER. NEED TO CONTROL MESSAGE CONTENT not to Broadcast
@@ -127,7 +131,7 @@ def msg_received(client, server, msg):
                             ## send to all except message originator
                             if clients[i]['id'] != msg['socketID']:
                                 # track message destination
-                                print ("004 TO -> "+str(clients[i]['id'])+"\n"+"MSG -> "+str(msg))
+                                print ("\n 004 TO -> "+str(clients[i]['id'])+"\n"+"MSG -> "+str(msg))
                                 server.send_message(clients[i], str(msg).replace("u'","'").replace("'","\""))
         except Exception as e:
             logging.error(traceback.format_exc())

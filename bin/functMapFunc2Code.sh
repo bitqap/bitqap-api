@@ -32,13 +32,17 @@ mapFunction2Code () {
                                 code=300
                                 name=listNewBlock
                                 ;;
-                provideBlocks|301)
+                provideBlockContent|301)
                                 code=301
-                                name=provideBlocks
+                                name=provideBlockContent
                                 ;;
-                getNewBlockFromNode|302)
+                AddNewBlockFromNode|302)
                                 code=302
-                                name=getNewBlockFromNode
+                                name=AddNewBlockFromNode
+                                ;;
+                askBlockContent|303)
+                                code=303
+                                name=askBlockContent
                                 ;;
                 updateNetworkInfo|401)
                                 code=401
@@ -91,21 +95,25 @@ mapERRORFunction2Code () {
                                 code=512
                                 name=pushSignedMessageToPending
                                 ;;
-                getNewBlockFromNode)
+                AddNewBlockFromNode)
                                 code=520
-                                name=getNewBlockFromNode
+                                name=AddNewBlockFromNode
                                 ;;
                 listNewBlock)
                                 code=521
                                 name=listNewBlock
                                 ;;
-                provideBlocks)
+                provideBlockContent)
                                 code=522
-                                name=provideBlocks
+                                name=provideBlockContent
                                 ;;
                 validateNetworkBlockHash)
                                 code=523
                                 name=validateNetworkBlockHash
+                                ;;
+                askBlockContent)
+                                code=524
+                                name=askBlockContent
                                 ;;
                 updateNetworkInfo)
                                 code=401
