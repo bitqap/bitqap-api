@@ -91,3 +91,33 @@ Fri Dec 10 21:38:20 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType
 Fri Dec 10 21:38:36 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
 Fri Dec 10 21:43:23 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "peers": [["161.97.69.136", "127.0.0.1"]]}' > communicate_pipe
 Fri Dec 10 21:43:23 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Fri Dec 10 21:46:38 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "peers": [["161.97.69.136", "127.0.0.1"]]}' > communicate_pipe
+Fri Dec 10 21:46:38 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Fri Dec 10 21:47:33 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 21:48:49 UTC 2021|error|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 21:49:03 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 21:50:23 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 21:51:54 UTC 2021|error|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 21:52:08 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 21:52:19 UTC 2021|error|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 21:53:07 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 21:53:38 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 21:56:55 UTC 2021|error|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 21:57:49 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 21:58:24 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 21:59:08 UTC 2021|error|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 21:59:22 UTC 2021|error|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 21:59:36 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 21:59:50 UTC 2021|error|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 22:00:13 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 22:00:51 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 22:01:15 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 22:01:31 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 22:01:40 UTC 2021|error|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 22:01:57 UTC 2021|error|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 22:02:14 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 22:16:47 UTC 2021|error|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Fri Dec 10 22:18:28 UTC 2021|error|
+Fri Dec 10 22:20:34 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "peers": [["161.97.69.136", "127.0.0.1"]]}' > communicate_pipe
+Fri Dec 10 22:20:34 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Fri Dec 10 22:20:44 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
