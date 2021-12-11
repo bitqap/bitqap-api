@@ -45,8 +45,6 @@ def WhereBashCoin(jsonData,serchKey,valueIs,printKeyValue):
             if jsonData[i][serchKey]==str(valueIs):
                 return jsonData[i][printKeyValue]
 
-
-
 def client_left(client, server):
     msg = {'message':"client left"}
     try:
@@ -63,7 +61,7 @@ def new_client(client, server):
     # connection list
     allConnected.append([selfIPaddress,client['address'][0]])
     #msg={"command":"updateInfo","peers":allConnected}
-    msg={"command":"nothing","peers":allConnected}
+    msg={"command":"nothing","messageType":"broadcast","peers":allConnected}
     clients[client['id']] = client
     print ("Connected Example: "+str(clients))
     server.send_message(clients[client['id']], str(msg).replace("u'","'").replace("'","\""))
@@ -71,7 +69,7 @@ def new_client(client, server):
 def new_client1(client, server):
     # connection list
     allConnected.append([selfIPaddress,client['address'][0]])
-    msg={'command':'connectionUpdate','connections':allConnected}
+    msg={'command':'connectionUpdate','messageType':'broadcast','connections':allConnected}
     clients[client['id']] = client    
     #server.send_message(clients[WhereBashCoin(clients,'destinationSocketBashCoin','yes','id')], str(msg).replace("u'","'").replace("'","\""))
     print ("Connected Example: "+str(clients))
@@ -81,6 +79,7 @@ def msg_received(client, server, msg):
     # Handle messages routing between clients
     global destination
     if msg != "":
+        print ("incoming message: "+str(msg))
         try:
             msg=json.loads(str(msg).encode('utf-8'))
             ## this is inital for communication_pipe client
@@ -92,6 +91,9 @@ def msg_received(client, server, msg):
                     # this message comes from bashCoin.sh. Becasue SH script sets destinationSocket based on SocketID.
                     #  and socketID setting by this script before sending to client[]
                     destination=msg['destinationSocket']
+                    print ("-------\n 005 TO -> "+str(destination)+"\n"+"MSG -> "+str(msg))
+                    cl = clients[destination]
+                    server.send_message(cl, str(msg).replace("u'","'").replace("'","\""))
                 else:
                     # Usually comes from local SH 
                     if msg['messageType']=='broadcast':
@@ -104,7 +106,7 @@ def msg_received(client, server, msg):
                         for i in clients:
                             if clients[i]['id'] != WhereBashCoin(clients,'destinationSocketBashCoin','yes','id') or clients[i]['id'] != exceptID:
                                 # message will not go to SH
-                                print ("\n 001 TO -> "+str(clients[i]['id'])+" and exceptID is "+str(exceptID)+"\n"+"MSG -> "+str(msg))
+                                print ("-------\n 001 TO -> "+str(clients[i]['id'])+" and exceptID is "+str(exceptID)+"\n"+"MSG -> "+str(msg))
                                 server.send_message(clients[i], str(msg).replace("u'","'").replace("'","\""))
                     else:
                         # messageType=direct and comes from Local (getRoot) means to SH
@@ -112,7 +114,7 @@ def msg_received(client, server, msg):
                         destination=WhereBashCoin(clients,'destinationSocketBashCoin','yes','id')
                         msg.update({'socketID':client['id']})
                         # track message destination
-                        print ("\n 002 TO -> "+str(destination)+"\n"+"MSG -> "+str(msg))
+                        print ("-------\n 002 TO -> "+str(destination)+"\n"+"MSG -> "+str(msg))
                         cl = clients[destination]
                         server.send_message(cl, str(msg).replace("u'","'").replace("'","\""))
             else:
@@ -123,7 +125,7 @@ def msg_received(client, server, msg):
                     msg.update({'socketID':client['id']})
                     if msg['messageType']=='direct':
                         ## MAKE THIS BY SECRET FILE CODE
-                        print ("\n 003 TO -> "+str(WhereBashCoin(clients,'destinationSocketBashCoin','yes','id'))+"\n"+"MSG -> "+str(msg))
+                        print ("-------\n 003 TO -> "+str(WhereBashCoin(clients,'destinationSocketBashCoin','yes','id'))+"\n"+"MSG -> "+str(msg))
                         server.send_message(clients[WhereBashCoin(clients,'destinationSocketBashCoin','yes','id')], str(msg).replace("u'","'").replace("'","\""))
                     if msg['messageType']=='broadcast':
                         ## THIS IS DANGER. NEED TO CONTROL MESSAGE CONTENT not to Broadcast
@@ -131,7 +133,7 @@ def msg_received(client, server, msg):
                             ## send to all except message originator
                             if clients[i]['id'] != msg['socketID']:
                                 # track message destination
-                                print ("\n 004 TO -> "+str(clients[i]['id'])+"\n"+"MSG -> "+str(msg))
+                                print ("-------\n 004 TO -> "+str(clients[i]['id'])+"\n"+"MSG -> "+str(msg))
                                 server.send_message(clients[i], str(msg).replace("u'","'").replace("'","\""))
         except Exception as e:
             logging.error(traceback.format_exc())
