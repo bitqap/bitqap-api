@@ -95,3 +95,23 @@ Sat Dec 11 21:21:30 UTC 2021|error|./bashCoin.sh '{"command": "mine", "appType":
 Sat Dec 11 21:21:39 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 3}' > communicate_pipe
 Sat Dec 11 21:24:24 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 3}' > communicate_pipe
 Sat Dec 11 21:25:53 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 3}' > communicate_pipe
+Sat Dec 11 21:31:29 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "messageType": "broadcast", "peers": [["161.97.69.136", "127.0.0.1"]]}' > communicate_pipe
+Sat Dec 11 21:31:29 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Sat Dec 11 21:33:21 UTC 2021|error|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Sat Dec 11 21:34:16 UTC 2021|info|./bashCoin.sh '{"command": "notification", "commandCode": "303", "appType": "miner", "messageType": "broadcast", "status": "0", "result": [{"ID": "152.blk.solved", "hash": "058c3c58cab6314bf81f90cee032b50b"}], "socketID": 4}' > communicate_pipe
+Sat Dec 11 21:35:48 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Sat Dec 11 21:35:52 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Sat Dec 11 21:41:54 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "messageType": "broadcast", "peers": [["161.97.69.136", "127.0.0.1"]]}' > communicate_pipe
+Sat Dec 11 21:41:54 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Sat Dec 11 21:42:38 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Sat Dec 11 21:48:27 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "messageType": "broadcast", "peers": [["161.97.69.136", "127.0.0.1"]]}' > communicate_pipe
+Sat Dec 11 21:48:27 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Sat Dec 11 21:49:18 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Sat Dec 11 21:50:08 UTC 2021|info|./bashCoin.sh '{"command": "notification", "commandCode": "303", "appType": "miner", "messageType": "broadcast", "status": "0", "result": [{"ID": "153.blk.solved", "hash": "081fcdb7175effb90218ac73bd58b110"}], "socketID": 3}' > communicate_pipe
+Sat Dec 11 21:51:19 UTC 2021|info|./bashCoin.sh '{"command": "notification", "commandCode": "303", "appType": "miner", "messageType": "broadcast", "status": "0", "result": [{"ID": "154.blk.solved", "hash": "00caeb747031f7f52b4d3a5b361d4260"}], "socketID": 3}' > communicate_pipe
+Sat Dec 11 21:52:31 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Sat Dec 11 21:54:25 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Sat Dec 11 21:56:56 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "messageType": "broadcast", "peers": [["161.97.69.136", "127.0.0.1"]]}' > communicate_pipe
+Sat Dec 11 21:56:56 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Sat Dec 11 21:57:24 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Sat Dec 11 21:58:24 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe

@@ -79,9 +79,10 @@ def msg_received(client, server, msg):
     # Handle messages routing between clients
     global destination
     if msg != "":
-        print ("incoming message: "+str(msg))
+        print ("-----START MESSAGE SCENARIO-----\nFrom: "+str(client['address']) +" incoming message: "+str(msg))
         try:
             msg=json.loads(str(msg).encode('utf-8'))
+            msg.update({'socketID':client['id']})
             ## this is inital for communication_pipe client
             if 'destinationSocketBashCoin' in msg:
                 client['destinationSocketBashCoin']=msg['destinationSocketBashCoin']
@@ -91,7 +92,7 @@ def msg_received(client, server, msg):
                     # this message comes from bashCoin.sh. Becasue SH script sets destinationSocket based on SocketID.
                     #  and socketID setting by this script before sending to client[]
                     destination=msg['destinationSocket']
-                    print ("-------\n 005 TO -> "+str(destination)+"\n"+"MSG -> "+str(msg))
+                    print ("-------\n 000 TO -> "+str(destination)+"\n"+"MSG -> "+str(msg))
                     cl = clients[destination]
                     server.send_message(cl, str(msg).replace("u'","'").replace("'","\""))
                 else:
@@ -106,6 +107,7 @@ def msg_received(client, server, msg):
                         for i in clients:
                             if clients[i]['id'] != WhereBashCoin(clients,'destinationSocketBashCoin','yes','id') or clients[i]['id'] != exceptID:
                                 # message will not go to SH
+                                #msg.update({'socketID':clients[i]['id']})
                                 print ("-------\n 001 TO -> "+str(clients[i]['id'])+" and exceptID is "+str(exceptID)+"\n"+"MSG -> "+str(msg))
                                 server.send_message(clients[i], str(msg).replace("u'","'").replace("'","\""))
                     else:
@@ -120,9 +122,9 @@ def msg_received(client, server, msg):
             else:
             ################################### MESAGE FROM EXTERNAL ########################
                 ## SECURITY: put command list from external to internal.
-                if msg['command'] in ['help','getNewBlockFromNode','provideBlocks','notification','nothing','listNewBlock','getTransactionMessageForSign','checkbalance','pushSignedMessageToPending','price']:
+                if msg['command'] in ['help','AddNewBlockFromNode','provideBlockContent','notification','nothing','listNewBlock','getTransactionMessageForSign','checkbalance','pushSignedMessageToPending','price']:
                     # socketID is message originator always
-                    msg.update({'socketID':client['id']})
+                    #msg.update({'socketID':client['id']})
                     if msg['messageType']=='direct':
                         ## MAKE THIS BY SECRET FILE CODE
                         print ("-------\n 003 TO -> "+str(WhereBashCoin(clients,'destinationSocketBashCoin','yes','id'))+"\n"+"MSG -> "+str(msg))

@@ -214,7 +214,7 @@ mine () {
         CURRENTBLOCK_BASE64=$(cat ${CURRENTBLOCK}.solved | base64 |tr '\n' ' ' | sed "s/ //g")
         #echo "{\"command\":\"notification\",\"commandCode\":\"302\",\"appType\":\"$appType\",\"messageType\":\"broadcast\",\"status\":\"0\", \"result\":[\"$CURRENTBLOCK_BASE64\",\"$NEXT_BASE64\"]}"
         # send askBlockContent 
-        echo "{\"command\":\"notification\",\"commandCode\":\"303\",\"appType\":\"$appType\",\"messageType\":\"broadcast\",\"status\":\"0\", \"result\":[{\"ID\":\"${CURRENTBLOCK}.solved\",\"hash\":\"$HASH\"}]}"
+        echo "{\"command\":\"notification\",\"commandCode\":\"301\",\"appType\":\"$appType\",\"messageType\":\"broadcast\",\"status\":\"0\", \"result\":[\"${CURRENTBLOCK}.solved\",\"${NEXTBLOCK}\"]}"
 
         rm -f $CURRENTBLOCK.wip
         rm -f $CURRENTBLOCK
@@ -314,7 +314,7 @@ checkAccountBal () {
         TOTAL=`echo $LASTCHANGE+$RECAFTERCHANGE+$SUM | bc`
         #echo "Current Balance for $ACCTNUM:     $TOTAL"
         #echo "{\'command\':'getBalance\',\'publicKeyHASH256\':\'$ACCTNUM\',\'status\':\'0\',\'balance\':\'$TOTAL\',\'description\':\'none\'}"
-        echo "{\"command\":\"checkbalance\",\"commandCode\":\"$commandCode\",\"messageType\":\"direct\" , \"status\":\"0\",\"destinationSocket\":\"$fromSocket\",\"result\":{\"publicKeyHASH256\":\"$ACCTNUM\",\"balance\":\"$TOTAL\"}}"
+        echo "{\"command\":\"checkbalance\",\"commandCode\":\"$commandCode\",\"messageType\":\"direct\" , \"status\":\"0\",\"destinationSocket\":$fromSocket,\"result\":{\"publicKeyHASH256\":\"$ACCTNUM\",\"balance\":\"$TOTAL\"}}"
 }
 
 
@@ -335,7 +335,7 @@ validate() {
                         CALCHASH=`sed "2c$PREVHASH" $i | md5sum | cut -d" " -f1`
                         REPORTEDHASH=`sed -n '2p' $j` 
                         [[ $CALCHASH != $REPORTEDHASH ]] && 
-                        echo "{ \"command\":\"validate\", \"status\":2,\"destinationSocket\":\"$fromSocket\",\"message\":\"Hash mismatch!  $i has changed!  Do not trust any block after and including $i\"}" &&
+                        echo "{ \"command\":\"validate\", \"status\":2,\"destinationSocket\":$fromSocket,\"message\":\"Hash mismatch!  $i has changed!  Do not trust any block after and including $i\"}" &&
                         exit 1
                         #echo "Hash mismatch!  $i has changed!  Do not trust any block after and including $i"
                         #echo "Hashes match! $i is a good block."
@@ -404,6 +404,10 @@ case "$command" in
         AddNewBlockFromNode)
                         AddNewBlockFromNode $@
                         validate
+                        exit 0
+                        ;;
+        askBlockContent)
+                        askBlockContent $@
                         exit 0
                         ;;
         pushSignedMessageToPending)

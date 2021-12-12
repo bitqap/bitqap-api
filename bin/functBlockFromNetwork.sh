@@ -9,7 +9,7 @@ listNewBlock() {
         if [ $listMissingBlocksID -ge 0 ]; then
                 listMissingBlocks=$(ls -1 $BLOCKPATH | grep "solved$\|blk$"| sort -nr -k 1 | head -$listMissingBlocksID)
                 #echo "{\"command\":\"listNewBlock\",\"destinationSocket\":\"$fromSocket\",\"status\":\"0\",\"result\":{\"blockList\": [\"blk.pending\",\""$(echo ${listMissingBlocks}| awk 'BEGIN { OFS = "\",\"" } { $1 = $1; print }')\""]}}"
-                echo "{\"command\":\"listNewBlock\",\"commandCode\":\"$commandCode\",\"destinationSocket\":\"$fromSocket\",\"status\":\"0\",\"result\":{\"blockList\": [\""$(echo ${listMissingBlocks}| awk 'BEGIN { OFS = "\",\"" } { $1 = $1; print }')\""]}}"
+                echo "{\"command\":\"listNewBlock\",\"commandCode\":\"$commandCode\",\"destinationSocket\":$fromSocket,\"status\":\"0\",\"result\":{\"blockList\": [\""$(echo ${listMissingBlocks}| awk 'BEGIN { OFS = "\",\"" } { $1 = $1; print }')\""]}}"
         fi
 }
 
@@ -25,11 +25,13 @@ askBlockContent() {
         hash=$(echo ${blockInfo}| jq -r '.hash')   #not use yet
         # check values are not empty. Otherwise exit 1
         [ ${#fileID} -ne 0 ] && [ ${#hash} -ne 0 ] || exit 1
+        echo $date > $tempRootFolder/0009
+        fileList=$(echo ${fileList} | jq --arg dt $fileID '. + [ $dt ]') 
         # check file not exist. Otherwise ignore it with exit 1
-        [ ! -f ${BLOCKPATH}/$fileID ] && fileList=$(echo $fileList | jq --arg dt $fileID '. + [ $dt ]') || exit 1
+        #[ ! -f ${BLOCKPATH}/$fileID ] && fileList=$(echo $fileList | jq --arg dt $fileID '. + [ $dt ]') || exit 1
     done
     # if below code not exit, then send 301 as notification to destination to execute ProvideBlockContent.
-    echo "{\"command\":\"notification\",\"commandCode\":\"301\",\"destinationSocket\":\"$fromSocket\",\"messageType\":\"direct\",\"result\":$fileList}"
+    echo "{\"command\":\"provideBlockContent\",\"commandCode\":\"$commandCode\",\"messageType\":\"direct\",\"result\":$fileList}"
 }
 
 
@@ -55,7 +57,7 @@ validateNetworkBlockHash() {
                         CALCHASH=`sed "2c$PREVHASH" $i | md5sum | cut -d" " -f1`
                         REPORTEDHASH=`sed -n '2p' $j`
                         [[ $CALCHASH != $REPORTEDHASH ]] && 
-                            echo "{\"command\": \"validateNetworkBlockHash\",\"commandCode\":\"$errorCode\",\"messageType\":\"direct\",\"destinationSocket\": \"$fromSocket\",\"status\": \"2\",\"message\":\"FFFFx0 Hash mismatch!  $i has changed!  Do not trust any block after and including $i\"}" && 
+                            echo "{\"command\": \"validateNetworkBlockHash\",\"commandCode\":\"$errorCode\",\"messageType\":\"direct\",\"destinationSocket\": $fromSocket,\"status\": \"2\",\"message\":\"FFFFx0 Hash mismatch!  $i has changed!  Do not trust any block after and including $i\"}" && 
                             exit 1
         done
         cd $curr
@@ -82,11 +84,12 @@ provideBlockContent() {
         blockMessage=[]
         for i in $(echo $jsonMessage  | jq -r '.result'| jq -c '.[]'| sed "s/\"//g"); do
                 blockBase64=$(cat ${BLOCKPATH}/$i | base64 | tr '\n' ' ' | sed 's/ //g')
-                blockMessage=$(echo ${blockMessage}| --arg dt $blockBase64 '. + [ $dt ]')
+                blockMessage=$(echo ${blockMessage}| jq --arg dt $blockBase64 '. + [ $dt ]')
                 #blockMessage=$(echo "$blockMessage\"$blockBase64\",")
         done
         # DONT SEND destination. By default it will route to session itself (bashCoin.sh) se
-        echo "{\"command\": \"notification\",\"commandCode\":\"302\",\"messageType\":\"direct\",\"status\": \"0\",\"result\":$blockMessage}"
+        msg=$(echo "{\"command\": \"AddNewBlockFromNode\",\"commandCode\":\"$commandCode\",\"destinationSocket\": $fromSocket,\"messageType\":\"direct\",\"status\": \"0\",\"result\":$blockMessage}"|tr '\n' ' ' | sed 's/ //g')
+        echo $msg
         # Get list and parse JSON
         # if 30% then provide message to download full copy (optional)
 }
@@ -127,7 +130,7 @@ AddNewBlockFromNode() {
             echo date > $tempRootFolder/0002
             checkBlockSignature $blocksTemp/$BlockID
         else
-            echo "{\"command\":\"AddNewBlockFromNode\",\"destinationSocket\": \"$fromSocket\",\"messageType\":\"direct\",\"commandCode\":\"$errorCode\",\"status\":"2",\"message\":\"Cheating in chain, block sign issue\"}"
+            echo "{\"command\":\"AddNewBlockFromNode\",\"destinationSocket\": $fromSocket,\"messageType\":\"direct\",\"commandCode\":\"$errorCode\",\"status\":"2",\"message\":\"Cheating in chain, block sign issue\"}"
             exit 1
         fi
 
@@ -154,7 +157,7 @@ AddNewBlockFromNode() {
         echo date > $tempRootFolder/0005
         validateNetworkBlockHash "$blocksTemp"
         ret=$?
-        ecoh $ret > $tempRootFolder/00_ret
+        echo $ret > $tempRootFolder/00_ret
             if [ $ret -eq 0 ]; then
                 echo date > $tempRootFolder/0007
                 ls $BLOCKPATH/*.blk | tail -n 1 | xargs -I {} mv {} {}.expired
@@ -162,10 +165,11 @@ AddNewBlockFromNode() {
                 removeTransactionsFromPending $blocks
                 mv $blocksTemp/*blk* $BLOCKPATH/
                 # broadcast this message. But not to same session (somehow)
-                echo "{\"command\":\"notification\",\"status\":0,\"commandCode\":\"302\",\"messageType\":\"broadcast\",\"exceptSocket\":$fromSocket,\"result\":$results}"
+                msg=$(echo "{\"command\":\"notification\",\"status\":0,\"commandCode\":\"001\",\"messageType\":\"broadcast\",\"exceptSocket\":$fromSocket,\"result\":$results}" |tr '\n' ' ' | sed 's/ //g' )
+                echo $msg
             fi
     else
-            echo "{\"command\":\"AddNewBlockFromNode\",\"commandCode\":\"$errorCode\",\"messageType\":\"broadcast\",\"status\":"2",\"message\":\"Function: validateNetworkBlockHash , Folder:$blocksTemp, firstFileNetwID=$firstFileNetwID and lastFileCurrIDplus1=$lastFileCurrIDplus1 Chain ID $BlockID is not matching\"}"
+            echo "{\"command\":\"AddNewBlockFromNode\",\"commandCode\":\"$errorCode\",\"messageType\":\"direct\",\"destinationSocket\": $fromSocket,\"status\":"2",\"message\":\"Function: validateNetworkBlockHash , Folder:$blocksTemp, firstFileNetwID=$firstFileNetwID and lastFileCurrIDplus1=$lastFileCurrIDplus1 Chain ID $BlockID is not matching\"}"
             exit 1
     fi
 }
