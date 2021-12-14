@@ -48,9 +48,9 @@ mapFunction2Code () {
                                 code=401
                                 name=updateNetworkInfo
                                 ;;
-                doNothing)
+                terminateMessaging|001)
                                 code=001
-                                name=doNothing
+                                name=terminateMessaging
                                 ;;
                 help)
                                 code=002

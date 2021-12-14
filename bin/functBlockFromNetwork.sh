@@ -82,13 +82,14 @@ provideBlockContent() {
         fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
         ### IF BLOCK NOT EXIST THEN ASK. OTHERWISE NOTHING TO DO
         blockMessage=[]
+        fileIDs=$(echo $jsonMessage  | jq -r '.result'| tr '\n' ' ' | sed 's/ //g')
         for i in $(echo $jsonMessage  | jq -r '.result'| jq -c '.[]'| sed "s/\"//g"); do
                 blockBase64=$(cat ${BLOCKPATH}/$i | base64 | tr '\n' ' ' | sed 's/ //g')
                 blockMessage=$(echo ${blockMessage}| jq --arg dt $blockBase64 '. + [ $dt ]')
                 #blockMessage=$(echo "$blockMessage\"$blockBase64\",")
         done
         # DONT SEND destination. By default it will route to session itself (bashCoin.sh) se
-        msg=$(echo "{\"command\": \"AddNewBlockFromNode\",\"commandCode\":\"$commandCode\",\"destinationSocket\": $fromSocket,\"messageType\":\"direct\",\"status\": \"0\",\"result\":$blockMessage}"|tr '\n' ' ' | sed 's/ //g')
+        msg=$(echo "{\"command\": \"AddNewBlockFromNode\",\"commandCode\":\"$commandCode\",\"destinationSocket\": $fromSocket,\"messageType\":\"direct\",\"status\": \"0\",\"fileIDs\":$fileIDs,\"result\":$blockMessage}"|tr '\n' ' ' | sed 's/ //g')
         echo $msg
         # Get list and parse JSON
         # if 30% then provide message to download full copy (optional)
@@ -106,8 +107,10 @@ removeTransactionsFromPending() {
 AddNewBlockFromNode() {
     commandCode=$(mapFunction2Code ${FUNCNAME[0]} code)
     errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
+    exceptSocket=[]
     fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
     results=$(echo $jsonMessage | jq -r '.result')
+    fileIDs=$(echo $jsonMessage  | jq -r '.fileIDs'| tr '\n' ' ' | sed 's/ //g')
     blocksTemp=$tempRootFolder/block_$RANDOM
     mkdir -p $blocksTemp
     count=0
@@ -160,12 +163,18 @@ AddNewBlockFromNode() {
         echo $ret > $tempRootFolder/00_ret
             if [ $ret -eq 0 ]; then
                 echo date > $tempRootFolder/0007
-                ls $BLOCKPATH/*.blk | tail -n 1 | xargs -I {} mv {} {}.expired
+                ls $BLOCKPATH/*.blk | sort -n|tail -n 1 | xargs -I {} mv {} {}.expired
                 blocks=$(ls ${blocksTemp}/*blk.solved*)
                 removeTransactionsFromPending $blocks
                 mv $blocksTemp/*blk* $BLOCKPATH/
                 # broadcast this message. But not to same session (somehow)
-                msg=$(echo "{\"command\":\"notification\",\"status\":0,\"commandCode\":\"001\",\"messageType\":\"broadcast\",\"exceptSocket\":$fromSocket,\"result\":$results}" |tr '\n' ' ' | sed 's/ //g' )
+                # DONT SEND final notification to main local BASH
+                exceptSocket=$(echo ${exceptSocket} | jq --arg dt $fromSocket '. + [ $dt ]' |sed 's/"//g')
+                #msg=$(echo "{\"command\":\"notification\",\"from\":\"$(hostname)\",\"tag\":\"FFFFx0\",\"status\":0,\"commandCode\":\"001\",\"messageType\":\"broadcast\",\"exceptSocket\":$exceptSocket,\"result\":[]}" |tr '\n' ' ' | sed 's/ //g' )
+                #msg1=$(echo "{\"command\":\"notification\",\"from\":\"direct $(hostname)\",\"status\":0,\"commandCode\":\"001\",\"messageType\":\"direct\",\"result\":[\"nothing\"]}" |tr '\n' ' ' | sed 's/ //g' )
+                #echo $msg1
+                # THIS MESSAGE FOR ROUTE local PIPE
+                msg=$(echo "{\"command\":\"notification\",\"tag\":\"FFFFx0\",\"status\":0,\"commandCode\":\"301\",\"messageType\":\"broadcast\",\"exceptSocket\":$exceptSocket,\"result\":$fileIDs}" |tr '\n' ' ' | sed 's/ //g' )
                 echo $msg
             fi
     else

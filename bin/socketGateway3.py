@@ -96,16 +96,21 @@ def msg_received(client, server, msg):
                     cl = clients[destination]
                     server.send_message(cl, str(msg).replace("u'","'").replace("'","\""))
                 else:
-                    # Usually comes from local SH 
+                    # Usually comes from local SH
+                    exceptID=[] 
                     if msg['messageType']=='broadcast':
                         if 'exceptSocket' in msg:
-                            exceptID=msg['exceptSocket']
+                            exceptID.extend(msg['exceptSocket'])
+                            exceptID.append(WhereBashCoin(clients,'destinationSocketBashCoin','yes','id'))
+                            integer_map = map(int, exceptID)
+                            exceptID = list(integer_map)
+                            del integer_map
                         else:
-                            exceptID=WhereBashCoin(clients,'destinationSocketBashCoin','yes','id')
+                            exceptID.append(WhereBashCoin(clients,'destinationSocketBashCoin','yes','id'))
                         ## MAKE THIS BY SECRET FILE CODE
                         # python3 wsdump.py  -r --text '{"command":"nothing","appType":"nothing","destinationSocketBashCoin":"yes"}' ws://127.0.0.1:8001
                         for i in clients:
-                            if clients[i]['id'] != WhereBashCoin(clients,'destinationSocketBashCoin','yes','id') or clients[i]['id'] != exceptID:
+                            if clients[i]['id'] not in exceptID:
                                 # message will not go to SH
                                 #msg.update({'socketID':clients[i]['id']})
                                 print ("-------\n 001 TO -> "+str(clients[i]['id'])+" and exceptID is "+str(exceptID)+"\n"+"MSG -> "+str(msg))
