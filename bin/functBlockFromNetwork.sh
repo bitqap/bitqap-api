@@ -178,7 +178,7 @@ AddNewBlockFromNode() {
                 echo $msg
             fi
     else
-            echo "{\"command\":\"AddNewBlockFromNode\",\"commandCode\":\"$errorCode\",\"messageType\":\"direct\",\"destinationSocket\": $fromSocket,\"status\":"2",\"message\":\"Function: validateNetworkBlockHash , Folder:$blocksTemp, firstFileNetwID=$firstFileNetwID and lastFileCurrIDplus1=$lastFileCurrIDplus1 Chain ID $BlockID is not matching\"}"
+            echo "{\"command\":\"AddNewBlockFromNode\",\"host\":\"$(pwd)\",\"commandCode\":\"$errorCode\",\"messageType\":\"direct\",\"destinationSocket\": $fromSocket,\"status\":"2",\"message\":\"Function: validateNetworkBlockHash , Folder:$blocksTemp, firstFileNetwID=$firstFileNetwID and lastFileCurrIDplus1=$lastFileCurrIDplus1 Chain ID $BlockID is not matching\"}"
             exit 1
     fi
 }

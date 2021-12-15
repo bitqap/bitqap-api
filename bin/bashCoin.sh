@@ -214,7 +214,7 @@ mine () {
         CURRENTBLOCK_BASE64=$(cat ${CURRENTBLOCK}.solved | base64 |tr '\n' ' ' | sed "s/ //g")
         #echo "{\"command\":\"notification\",\"commandCode\":\"302\",\"appType\":\"$appType\",\"messageType\":\"broadcast\",\"status\":\"0\", \"result\":[\"$CURRENTBLOCK_BASE64\",\"$NEXT_BASE64\"]}"
         # send askBlockContent 
-        echo "{\"command\":\"notification\",\"commandCode\":\"301\",\"messageType\":\"broadcast\",\"status\":\"0\", \"result\":[\"${CURRENTBLOCK}.solved\",\"${NEXTBLOCK}\"]}"
+        echo "{\"command\":\"notification\",\"host\":\"$(hostname)\",\"commandCode\":\"301\",\"messageType\":\"broadcast\",\"status\":\"0\", \"result\":[\"${CURRENTBLOCK}.solved\",\"${NEXTBLOCK}\"]}"
 
         rm -f $CURRENTBLOCK.wip
         rm -f $CURRENTBLOCK
