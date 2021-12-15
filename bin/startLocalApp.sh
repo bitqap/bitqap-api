@@ -20,15 +20,11 @@ main() {
     echo ${line}| jq . > /dev/null 
     if [ $? -eq 0 ]; then     
       line=$(echo -e ${line});
-      appID=$(echo ${line}| jq -r '.appID')
-      if   [ "$appID" == "localApp" ]; then
-          cmd="./$MAINSHELL '${line}' > $NAMED_PIPE_BSH";
-      elif [ "$appID" == "externalApp" ]; then
-          cmd="./$MAINSHELL '${line}' > $NAMED_PIPE_EXT";
-      else
-          cmd="./$MAINSHELL '${line}' | tee $NAMED_PIPE_BSH > $NAMED_PIPE_EXT";
-      fi
-      eval $cmd;
+      cmd="./$MAINSHELL  '${line}' ";
+      result=$(eval $cmd);
+      tag=$(echo ${result}| jq -r '.tag')
+      # if tag is FFFFx1 then unidrectional. DIOD to Local bashCoin.sh
+      [ "$tag" == "FFFFx1" ] && echo $result > $NAMED_PIPE_BSH || echo $result | tee $NAMED_PIPE_BSH > $NAMED_PIPE_EXT
       # LOGGING
       echo "$(date -u)|info|$cmd"  >> $INTERNAL_COMM_LOG
     else

@@ -89,7 +89,7 @@ provideBlockContent() {
                 #blockMessage=$(echo "$blockMessage\"$blockBase64\",")
         done
         # DONT SEND destination. By default it will route to session itself (bashCoin.sh) se
-        msg=$(echo "{\"command\": \"AddNewBlockFromNode\",\"commandCode\":\"$commandCode\",\"destinationSocket\": $fromSocket,\"messageType\":\"direct\",\"status\": \"0\",\"fileIDs\":$fileIDs,\"result\":$blockMessage}"|tr '\n' ' ' | sed 's/ //g')
+        msg=$(echo "{\"command\": \"AddNewBlockFromNode\",\"host\":\"$(pwd)\",\"tag\":\"FFFFx1\",\"commandCode\":\"$commandCode\",\"destinationSocket\": $fromSocket,\"messageType\":\"direct\",\"status\": \"0\",\"fileIDs\":$fileIDs,\"result\":$blockMessage}"|tr '\n' ' ' | sed 's/ //g')
         echo $msg
         # Get list and parse JSON
         # if 30% then provide message to download full copy (optional)
