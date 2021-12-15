@@ -137,7 +137,7 @@ def msg_received(client, server, msg):
                     if msg['messageType']=='broadcast':
                         ## THIS IS DANGER. NEED TO CONTROL MESSAGE CONTENT not to Broadcast
                         for i in clients:
-                            ## send to all except message originator
+                            ## send to all except message originator. Even bashCoin.sh socket
                             if clients[i]['id'] != msg['socketID']:
                                 # track message destination
                                 print ("-------\n 004 TO -> "+str(clients[i]['id'])+"\n"+"MSG -> "+str(msg))

@@ -108,3 +108,7 @@ Tue Dec 14 21:02:03 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": 
 Tue Dec 14 21:02:03 UTC 2021|info|./bashCoin.sh '{"command": "provideBlockContent", "destinationSocket": 1, "from": "qiz.istehkam.com", "messageType": "direct", "result": ["277.blk.solved", "278.blk"], "socketID": 7}' > communicate_pipe
 Tue Dec 14 21:03:00 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
 Tue Dec 14 21:03:00 UTC 2021|info|./bashCoin.sh '{"command": "provideBlockContent", "destinationSocket": 1, "from": "qiz.istehkam.com", "messageType": "direct", "result": ["278.blk.solved", "279.blk"], "socketID": 7}' > communicate_pipe
+Tue Dec 14 21:16:01 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Tue Dec 14 21:16:02 UTC 2021|info|./bashCoin.sh '{"command": "provideBlockContent", "destinationSocket": 1, "from": "qiz.istehkam.com", "messageType": "direct", "result": ["279.blk.solved", "280.blk"], "socketID": 7}' > communicate_pipe
+Tue Dec 14 21:17:28 UTC 2021|info|./bashCoin.sh '{"command": "mine", "appType": "miner", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Tue Dec 14 21:17:28 UTC 2021|info|./bashCoin.sh '{"command": "provideBlockContent", "destinationSocket": 1, "from": "qiz.istehkam.com", "messageType": "direct", "result": ["280.blk.solved", "281.blk"], "socketID": 7}' > communicate_pipe
