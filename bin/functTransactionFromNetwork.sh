@@ -42,7 +42,7 @@ getTransactionMessageForSign() {
         TOTAL=$(checkAccountBal \'{"command":"checkbalance","ACCTNUM":"$SENDER"} \' |  jq '.result'  | jq '.balance'| sed "s/\"//g")
 
         [[ $AMOUNT -gt $TOTAL ]] &&
-        echo "{ \"command\":\"getTransactionMessageForSign\",\"messageType\":\"direct\",\"commandCode\":\"$errorCode\",\"status\":2,\"destinationSocket\":\"$fromSocket\",\"SENDER\":\"$ACCTNUM\",\"message\":\"Insufficient Funds!\"}" && exit 1
+        echo "{ \"command\":\"getTransactionMessageForSign\",\"messageType\":\"direct\",\"commandCode\":\"$errorCode\",\"status\":2,\"destinationSocket\":$fromSocket,\"SENDER\":\"$ACCTNUM\",\"message\":\"Insufficient Funds!\"}" && exit 1
         
         dateTime=$DATEEE
 
@@ -50,7 +50,7 @@ getTransactionMessageForSign() {
 
         ## ADDING BY SYSTEM 
         CHANGE=`echo $TOTAL-$AMOUNT-$FEE | bc`
-        echo "{ \"command\":\"getTransactionMessageForSign\",\"messageType\":\"direct\", \"status\":0,\"destinationSocket\":\"$fromSocket\",\"result\":{\"forReciverData\":\"$SENDER:$RECEIVER:$AMOUNT:$FEE:$dateTime\",\"forSenderData\":\"$SENDER:$SENDER:$CHANGE:0:$dateTime\"}}"
+        echo "{ \"command\":\"getTransactionMessageForSign\",\"messageType\":\"direct\", \"status\":0,\"destinationSocket\":$fromSocket,\"result\":{\"forReciverData\":\"$SENDER:$RECEIVER:$AMOUNT:$FEE:$dateTime\",\"forSenderData\":\"$SENDER:$SENDER:$CHANGE:0:$dateTime\"}}"
 }
 
 pushSignedMessageToPending() {
@@ -63,23 +63,68 @@ pushSignedMessageToPending() {
     commandCode=$(mapFunction2Code ${FUNCNAME[0]} code)
     errorCode=$(mapFunction2Code ${FUNCNAME[0]})
     fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
-    commandCode=$(mapFunction2Code ${FUNCNAME[0]})
-    errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
     forReciverData=$(echo ${jsonMessage} | jq -r '.result' | jq -r '.[0]')
     forSenderData=$( echo ${jsonMessage} | jq -r '.result' | jq -r '.[1]')
     ## here we can validate it first before pushing to Pending Transaction
     txIDReciever=$(echo ${forReciverData}| awk -v FS=':' '{print $1}')
     txIDSender=$(  echo ${forSenderData} | awk -v FS=':' '{print $1}')
-    recordExist=$(cat ${blk.pending}     | grep  "$txIDReciever\|$txIDSender")
-    if [ ${#recordExist} -ge 5 ]; then 
-        validateTransactionMessage $forReciverData && validateTransactionMessage $forSenderData
-        echo "$forReciverData" >> blk.pending      && echo "$forSenderData"  >> blk.pending
+    recordExist=$(cat $BLOCKPATH/blk.pending | grep  "$txIDReciever\|$txIDSender")
+    if [ ${#recordExist} -le 5 ]; then 
+        validateTransactionMessage $forReciverData || exit 1
+        validateTransactionMessage $forSenderData  || exit 1
+        echo "$forReciverData" >> $BLOCKPATH/blk.pending  && echo "$forSenderData"  >> $BLOCKPATH/blk.pending
         if [ $? -eq 0 ]; then
-                echo "{\"command\":\"pushSignedMessageToPending\",\"commandCode\":\"$commandCode\",\"status\":0,\"messageType\":\"direct\",\"destinationSocket\":$fromSocket,\"commandCode\":\"$commandCode\"}"
-                echo "{\"command\":\"notification\",\"status\":0,\"commandCode\":\"202\",\"status\":0,\"messageType\":\"broadcast\",\"exceptSocket\":$fromSocket,\"result\":[$forReciverData,$forSenderData]}"
+                echo "{\"command\":\"notification\",\"status\":0,\"commandCode\":\"401\",\"status\":0,\"messageType\":\"broadcast\",\"result\":[\"$txIDReciever\",\"$txIDSender\"]}"
         fi
      else
-        echo "{'command':'pushSignedMessageToPending',\"commandCode\":\"$errorCode\",'status':2,\"messageType\":\"direct\",\"destinationSocket\":$fromSocket,\"commandCode\":\"$commandCode\"}"      
+        echo "{\"command\":\"pushSignedMessageToPending\",\"commandCode\":\"$commandCode\",\"status\":\"$errorCode\",\"messageType\":\"direct\",\"destinationSocket\":$fromSocket,\"commandCode\":\"$commandCode\"}"      
      fi
 }
+
+provideTXMessage() {
+        ## THIS IS 401 which trigger by first notification chain
+        commandCode=$(mapFunction2Code ${FUNCNAME[0]} code)
+        errorCode=$(mapFunction2Code ${FUNCNAME[0]})
+        fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
+        txList=$(echo ${jsonMessage} | jq -r '.result')
+        fullTXmessages=[]
+        for TX in $(echo ${txList}| jq -c .[]); do
+                TX=$(echo ${TX}| sed "s/\"//g")
+                for blockFilesAndPending in $(ls -1 ${BLOCKPATH}/*blk* | sort -r); do
+                        transaction=$(cat ${blockFilesAndPending}| grep $TX )
+                        if [ $? -eq 0 ] ; then
+                                fullTXmessages=$(echo $fullTXmessages| jq --arg dt $transaction '. + [ $dt ]')
+                                break
+                        fi
+                done
+        done
+        if [ $(echo $fullTXmessages| jq length) == 2 ]; then
+                #echo $fullTXmessages| jq length > $tempRootFolder/count_tx
+                msg=$(echo "{\"command\":\"AddTransactionFromNetwork\",\"messageType\":\"direct\",\"destinationSocket\": $fromSocket,\"status\":0,\"commandCode\":\"$commandCode\",\"result\":$fullTXmessages }"|tr '\n' ' ' | sed 's/ //g'  )
+                echo $msg
+        else
+                msg=$(echo "{\"command\":\"AddTransactionFromNetwork\",\"messageType\":\"direct\",\"destinationSocket\": $fromSocket,\"status\":$errorCode,\"commandCode\":\"$commandCode\",\"result\":$fullTXmessages }"|tr '\n' ' ' | sed 's/ //g'  )        
+                echo $msg
+        fi
+}
+
+AddTransactionFromNetwork() {
+        commandCode=$(mapFunction2Code ${FUNCNAME[0]} code)
+        fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
+        txIDlist=[]
+        exceptSocket=[]
+        for transactions in $(echo ${jsonMessage}| jq -r '.result'| jq -c .[]); do
+                transaction=$(echo ${transactions}| sed "s/\"//g")
+                txID=$(echo ${transaction}| awk -v FS=':' '{print $1}'| sed "s/\"//g")
+                ls -1 $BLOCKPATH/*blk* | sort -r | xargs grep $txID > /dev/null
+                [ $? -eq 0 ] && exit 1
+                echo $transaction >> $BLOCKPATH/blk.pending
+                txIDlist=$(echo ${txIDlist}| jq --arg dt $txID '. + [ $dt ]')
+        done
+        echo $txIDlist > $tempRootFolder/txIDlist
+        exceptSocket=$(echo ${exceptSocket} | jq --arg dt $fromSocket '. + [ $dt ]'|sed "s/\"//g" )
+        msg=$(echo "{\"command\":\"notification\",\"tag\":\"FFFFx0\",\"status\":0,\"commandCode\":\"$commandCode\",\"status\":0,\"exceptSocket\":$exceptSocket,\"messageType\":\"broadcast\",\"result\":$txIDlist}"| tr '\n' ' ' | sed 's/ //g')
+        echo $msg
+}
+
 

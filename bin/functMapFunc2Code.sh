@@ -44,9 +44,13 @@ mapFunction2Code () {
                                 code=303
                                 name=askBlockContent
                                 ;;
-                updateNetworkInfo|401)
+                provideTXMessage|401)
                                 code=401
-                                name=updateNetworkInfo
+                                name=provideTXMessage
+                                ;;
+                AddTransactionFromNetwork|402)
+                                code=402
+                                name=AddTransactionFromNetwork
                                 ;;
                 terminateMessaging|001)
                                 code=001
@@ -76,47 +80,59 @@ mapERRORFunction2Code () {
         type=$2
         case "$funcName" in 
                 mine)
-                                code=500
+                                code=1500
                                 name=mine
                                 ;;
                 mineGenesis)
-                                code=501
+                                code=1501
                                 name=mineGenesis
                                 ;;
                 checkAccountBal)
-                                code=510
+                                code=1510
                                 name=checkAccountBal
                                 ;;
                 getTransactionMessageForSign)
-                                code=511
+                                code=1511
                                 name=getTransactionMessageForSign
                                 ;;
+                AddTransactionFromNetwork)
+                                code=1512
+                                name=AddTransactionFromNetwork
+                                ;;
                 pushSignedMessageToPending)
-                                code=512
+                                code=1513
                                 name=pushSignedMessageToPending
                                 ;;
+                askBlockContent)
+                                code=1514
+                                name=askBlockContent
+                                ;;
+                provideTXMessage)
+                                code=1515
+                                name=provideTXMessage
+                                ;;
                 AddNewBlockFromNode)
-                                code=520
+                                code=1520
                                 name=AddNewBlockFromNode
                                 ;;
                 listNewBlock)
-                                code=521
+                                code=1521
                                 name=listNewBlock
                                 ;;
                 provideBlockContent)
-                                code=522
+                                code=1522
                                 name=provideBlockContent
                                 ;;
                 validateNetworkBlockHash)
-                                code=523
+                                code=1523
                                 name=validateNetworkBlockHash
                                 ;;
                 askBlockContent)
-                                code=524
+                                code=1524
                                 name=askBlockContent
                                 ;;
                 updateNetworkInfo)
-                                code=401
+                                code=1401
                                 name=updateNetworkInfo
                                 ;;
                 *)

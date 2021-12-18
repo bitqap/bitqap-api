@@ -393,8 +393,19 @@ case "$command" in
                         exit 0
                         ;;
         getTransactionMessageForSign)
-                        shift
                         getTransactionMessageForSign $@
+                        exit 0
+                        ;;
+        pushSignedMessageToPending)
+                        pushSignedMessageToPending $@
+                        exit 0
+                        ;;
+        provideTXMessage)
+                        provideTXMessage $@
+                        exit 0
+                        ;;
+        AddTransactionFromNetwork)
+                        AddTransactionFromNetwork $@
                         exit 0
                         ;;
         provideBlockContent)
@@ -409,12 +420,6 @@ case "$command" in
         askBlockContent)
                         askBlockContent $@
                         exit 0
-                        ;;
-        pushSignedMessageToPending)
-                        pushSignedMessageToPending $@
-                        ;;
-        updateNetworkInfo)
-                        updateNetworkInfo $@
                         ;;
         nothing)        
                         ## this is dummy for troubleshooting. Never mind

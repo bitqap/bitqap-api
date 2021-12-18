@@ -38,9 +38,7 @@ askBlockContent() {
 validateNetworkBlockHash() {
         folder=$1
         curr=$(pwd)
-        #[ -z $flagByPassFolder ] && flagByPassFolder=1 || flagByPassFolder=0
-        # only in first attempt
-        flagByPassFolder=1
+        flagByPassFolder=1   # only in first attempt.
         errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
         cd $folder
         # Check that there are blocks to validate
@@ -147,14 +145,12 @@ AddNewBlockFromNode() {
             fi
             done
     done
-
     
     expcetedNtwrkBlockID=$(ls -1 ${BLOCKPATH}  | sort -n | grep "\.solved$" | sort -n |tail -n 1| awk -v FS='.blk.solved' '{print $1+1}')
     comingNtwrkBlockID=$(ls -1 ${blocksTemp}   | sort -n | grep "\.solved$" | sort -n |head -1  | awk -v FS='.blk.solved' '{print $1}')
     
     ## change blk file to current+1 for validataion chain
     [ $(ls ${blocksTemp}/*.blk | wc -l) -eq 1 ] && mv ${blocksTemp}/*.blk ${blocksTemp}/$(expr ${comingNtwrkBlockID} + 1).blk || exit 1
-
 
     if [ "$expcetedNtwrkBlockID" == "$comingNtwrkBlockID" ];then
         echo date > $tempRootFolder/0005
@@ -167,13 +163,9 @@ AddNewBlockFromNode() {
                 blocks=$(ls ${blocksTemp}/*blk.solved*)
                 removeTransactionsFromPending $blocks
                 mv $blocksTemp/*blk* $BLOCKPATH/
-                # broadcast this message. But not to same session (somehow)
-                # DONT SEND final notification to main local BASH
+                # broadcast this message. But not to same session (somehow) and local root.
                 exceptSocket=$(echo ${exceptSocket} | jq --arg dt $fromSocket '. + [ $dt ]' |sed 's/"//g')
-                #msg=$(echo "{\"command\":\"notification\",\"from\":\"$(hostname)\",\"tag\":\"FFFFx0\",\"status\":0,\"commandCode\":\"001\",\"messageType\":\"broadcast\",\"exceptSocket\":$exceptSocket,\"result\":[]}" |tr '\n' ' ' | sed 's/ //g' )
-                #msg1=$(echo "{\"command\":\"notification\",\"from\":\"direct $(hostname)\",\"status\":0,\"commandCode\":\"001\",\"messageType\":\"direct\",\"result\":[\"nothing\"]}" |tr '\n' ' ' | sed 's/ //g' )
-                #echo $msg1
-                # THIS MESSAGE FOR ROUTE local PIPE
+                # THIS MESSAGE FOR ROUTE local PIPE to broadcast
                 msg=$(echo "{\"command\":\"notification\",\"tag\":\"FFFFx0\",\"status\":0,\"commandCode\":\"301\",\"messageType\":\"broadcast\",\"exceptSocket\":$exceptSocket,\"result\":$fileIDs}" |tr '\n' ' ' | sed 's/ //g' )
                 echo $msg
             fi

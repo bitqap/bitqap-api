@@ -127,7 +127,7 @@ def msg_received(client, server, msg):
             else:
             ################################### MESAGE FROM EXTERNAL ########################
                 ## SECURITY: put command list from external to internal.
-                if msg['command'] in ['help','AddNewBlockFromNode','provideBlockContent','notification','nothing','listNewBlock','getTransactionMessageForSign','checkbalance','pushSignedMessageToPending','price']:
+                if msg['command'] in ['help','AddNewBlockFromNode','provideBlockContent','notification','nothing','listNewBlock','getTransactionMessageForSign','checkbalance','pushSignedMessageToPending','provideTXMessage','AddTransactionFromNetwork','price']:
                     # socketID is message originator always
                     #msg.update({'socketID':client['id']})
                     if msg['messageType']=='direct':

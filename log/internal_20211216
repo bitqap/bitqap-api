@@ -1,0 +1,7 @@
+Thu Dec 16 18:50:13 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "messageType": "broadcast", "peers": [["161.97.69.136", "127.0.0.1"]]}' > communicate_pipe
+Thu Dec 16 18:50:14 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Thu Dec 16 18:51:36 UTC 2021|info|./bashCoin.sh '{"command": "checkbalance", "ACCTNUM": "50416596951b715b7e8e658de7d9f751fb8b97ce4edf0891f269f64c8fa8e034", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Thu Dec 16 20:17:37 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "messageType": "broadcast", "peers": [["161.97.69.136", "127.0.0.1"]]}' > communicate_pipe
+Thu Dec 16 20:17:37 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Thu Dec 16 20:23:27 UTC 2021|error|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Thu Dec 16 20:28:31 UTC 2021|error|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
