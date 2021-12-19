@@ -140,7 +140,7 @@ AddNewBlockFromNode() {
             # STARTING NEW LOOP to read all TX
             validateTransactionMessage $line
             if [ $? -ne 0 ]; then
-                echo "{\"command\":\"$command\",\"status\":3,\"message\":\"Some transactions cannot be validated. it is destroy whole signature of block\"}" 
+                echo "{\"command\":\"$command\",\"commandCode\":\"$commandCode\",\"status\":$errorCode,\"message\":\"Some transactions cannot be validated. it is destroy whole signature of block\"}" 
                 exit 1
             fi
             done
@@ -149,28 +149,26 @@ AddNewBlockFromNode() {
     expcetedNtwrkBlockID=$(ls -1 ${BLOCKPATH}  | sort -n | grep "\.solved$" | sort -n |tail -n 1| awk -v FS='.blk.solved' '{print $1+1}')
     comingNtwrkBlockID=$(ls -1 ${blocksTemp}   | sort -n | grep "\.solved$" | sort -n |head -1  | awk -v FS='.blk.solved' '{print $1}')
     
-    ## change blk file to current+1 for validataion chain
+    ## change blk file to current+1 for validataion chain and expire old one.
     [ $(ls ${blocksTemp}/*.blk | wc -l) -eq 1 ] && mv ${blocksTemp}/*.blk ${blocksTemp}/$(expr ${comingNtwrkBlockID} + 1).blk || exit 1
 
     if [ "$expcetedNtwrkBlockID" == "$comingNtwrkBlockID" ];then
         echo date > $tempRootFolder/0005
         validateNetworkBlockHash "$blocksTemp"
         ret=$?
-        echo $ret > $tempRootFolder/00_ret
             if [ $ret -eq 0 ]; then
-                echo date > $tempRootFolder/0007
-                ls $BLOCKPATH/*.blk | sort -n|tail -n 1 | xargs -I {} mv {} {}.expired
                 blocks=$(ls ${blocksTemp}/*blk.solved*)
                 removeTransactionsFromPending $blocks
-                mv $blocksTemp/*blk* $BLOCKPATH/
+                # expire old blk and move all to BLOCKCHAIN
+                ls $BLOCKPATH/*.blk | sort -n|tail -n 1 | xargs -I {} mv {} {}.expired && mv $blocksTemp/*blk* $BLOCKPATH/
                 # broadcast this message. But not to same session (somehow) and local root.
                 exceptSocket=$(echo ${exceptSocket} | jq --arg dt $fromSocket '. + [ $dt ]' |sed 's/"//g')
-                # THIS MESSAGE FOR ROUTE local PIPE to broadcast
+                # THIS MESSAGE FOR ROUTE local PIPE to broadcast (remove new lines)
                 msg=$(echo "{\"command\":\"notification\",\"tag\":\"FFFFx0\",\"status\":0,\"commandCode\":\"301\",\"messageType\":\"broadcast\",\"exceptSocket\":$exceptSocket,\"result\":$fileIDs}" |tr '\n' ' ' | sed 's/ //g' )
                 echo $msg
             fi
     else
-            echo "{\"command\":\"AddNewBlockFromNode\",\"host\":\"$(pwd)\",\"commandCode\":\"$errorCode\",\"messageType\":\"direct\",\"destinationSocket\": $fromSocket,\"status\":"2",\"message\":\"Function: validateNetworkBlockHash , Folder:$blocksTemp, firstFileNetwID=$firstFileNetwID and lastFileCurrIDplus1=$lastFileCurrIDplus1 Chain ID $BlockID is not matching\"}"
+            echo "{\"command\":\"AddNewBlockFromNode\",\"host\":\"$(pwd)\",\"commandCode\":\"$commandCode\",\"messageType\":\"direct\",\"destinationSocket\": $fromSocket,\"status\":$errorCode,\"message\":\"Function: validateNetworkBlockHash , Folder:$blocksTemp, firstFileNetwID=$firstFileNetwID and lastFileCurrIDplus1=$lastFileCurrIDplus1 Chain ID $BlockID is not matching\"}"
             exit 1
     fi
 }
