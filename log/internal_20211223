@@ -1,0 +1,12 @@
+Thu Dec 23 09:11:08 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Thu Dec 23 10:00:50 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Thu Dec 23 10:01:15 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "185.30.90.187"}' > communicate_pipe
+Thu Dec 23 10:02:21 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "185.30.90.187"}' > communicate_pipe
+Thu Dec 23 10:04:48 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Thu Dec 23 10:05:06 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "185.30.90.187"}' > communicate_pipe
+Thu Dec 23 10:05:19 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "185.30.90.187"}' > communicate_pipe
+Thu Dec 23 10:05:52 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "185.30.90.187"}' > communicate_pipe
+Thu Dec 23 10:05:58 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "185.30.90.187"}' > communicate_pipe
+Thu Dec 23 10:08:03 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "185.30.90.187"}' > communicate_pipe
+Thu Dec 23 10:08:09 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "185.30.90.187"}' > communicate_pipe
+Thu Dec 23 10:18:19 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe

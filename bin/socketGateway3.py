@@ -25,8 +25,7 @@ clients = {}
 
 # This list for build connected device list,
 #  client Graph algo will find whether it can reach main network or not.
-selfIPaddress = requests.get('https://checkip.amazonaws.com').text.strip()
-allConnected=[]
+localPublicIP = requests.get('https://checkip.amazonaws.com').text.strip()
 
 def getRoot():
     result=''
@@ -36,7 +35,7 @@ def getRoot():
             locals.append(i)
     return locals
 
-# FIND local SH (main)
+# Find local client which is binded core SH script (main)
 def WhereBashCoin(jsonData,serchKey,valueIs,printKeyValue):
     ## This function return client ID of bashCoin.sh connection. It can be done by secret
     ## WhereBashCoin(clients,'destinationSocketBashCoin',<yes>,'id')
@@ -46,33 +45,33 @@ def WhereBashCoin(jsonData,serchKey,valueIs,printKeyValue):
                 return jsonData[i][printKeyValue]
 
 def client_left(client, server):
-    msg = {'message':"client left"}
+    nodeMessage={"command":"removeConnectionPeers","messageType":"direct","socketID":WhereBashCoin(clients,'destinationSocketBashCoin','yes','id'),"node":str(client['address'][0])}
     try:
         clients.pop(client['id'])
-        ### BU LAZIMDI KI, PORTU DA ELAVE EDESEN. SILENDE LAZIM OLACAQ. 
-        #allConnected.pop([selfIPaddress,client['address'][0]])
     except:
         print ("Error in removing client %s" % client['id'])
-    for cl in clients.values():
-        server.send_message(cl, str(msg))
+    #for cl in clients.values():
+        #server.send_message(cl, str(nodeMessage))
+    print (nodeMessage)
+    server.send_message(clients[WhereBashCoin(clients,'destinationSocketBashCoin','yes','id')], str(nodeMessage).replace("u'","'").replace("'","\""))
 
+
+
+#def new_client(client, server):
+#    # connection list
+#    clients[client['id']] = client
+#    print ("Connected Example: "+str(clients))
+#    server.send_message(clients[client['id']], str(msg).replace("u'","'").replace("'","\""))
 
 def new_client(client, server):
     # connection list
-    allConnected.append([selfIPaddress,client['address'][0]])
-    #msg={"command":"updateInfo","peers":allConnected}
-    msg={"command":"nothing","messageType":"broadcast","peers":allConnected}
     clients[client['id']] = client
     print ("Connected Example: "+str(clients))
-    server.send_message(clients[client['id']], str(msg).replace("u'","'").replace("'","\""))
-
-def new_client1(client, server):
-    # connection list
-    allConnected.append([selfIPaddress,client['address'][0]])
-    msg={'command':'connectionUpdate','messageType':'broadcast','connections':allConnected}
-    clients[client['id']] = client    
-    #server.send_message(clients[WhereBashCoin(clients,'destinationSocketBashCoin','yes','id')], str(msg).replace("u'","'").replace("'","\""))
-    print ("Connected Example: "+str(clients))
+    if client['address'][0] != '127.0.0.1':
+        nodeMessage={"command":"addConnectionPeers","messageType":"direct","socketID":WhereBashCoin(clients,'destinationSocketBashCoin','yes','id'),"node1":localPublicIP,"node2":str(client['address'][0])}
+        print (nodeMessage)
+        #server.send_message(clients[client['id']], str(nodeMessage).replace("u'","'").replace("'","\""))
+        server.send_message(clients[WhereBashCoin(clients,'destinationSocketBashCoin','yes','id')], str(nodeMessage).replace("u'","'").replace("'","\""))
 
 
 def msg_received(client, server, msg):

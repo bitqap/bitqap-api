@@ -21,7 +21,7 @@ fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
 . $ROOTDIR/bin/functTransactionFromNetwork.sh
 . $ROOTDIR/bin/functMapFunc2Code.sh
 . $ROOTDIR/bin/notification.sh
-
+. $ROOTDIR/bin/p2p.sh
 
 ppassword() {
         ## this function created global Password variable to put OpenSSL command line.
@@ -419,6 +419,15 @@ case "$command" in
                         ;;
         askBlockContent)
                         askBlockContent $@
+                        exit 0
+                        ;;
+        addConnectionPeers)
+                        initializeDB
+                        addConnectionPeers $@
+                        exit 0
+                        ;;
+        removeConnectionPeers)
+                        removeConnectionPeers $@
                         exit 0
                         ;;
         nothing)        

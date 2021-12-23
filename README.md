@@ -33,10 +33,23 @@ pip3 install websocket_server
 pip3 install websocker-client
 ```
 
+<br />
+<br />
+<br />
+<br />
+
+This project is maintaining by **Fariz Muradov**. (Azerbaijan/Baku) <br />
+[![linkedin][linkedin-img]][linkedin] [![github][github-img]][github]
+
 
 [BITQAP]:          https://bitqap.github.io/info
 [bash-img]:        https://github.com/bitqap/bitqap/blob/main/doc/img/bash_readme_s6.jpeg
 [bash]:            https://en.wikipedia.org/wiki/Bash_(Unix_shell)
+
+[linkedin]:        https://www.linkedin.com/in/fariz-muradov-b100a268/
+[linkedin-img]:    https://github.com/bitqap/bitqap/blob/main/doc/img/linkedin_icon_s1.png
+[github-img]:      https://github.com/bitqap/bitqap/blob/main/doc/img/github_icon_s2.png
+[github]:          https://github.com/aze2201
 
 
 [python-img]:      https://github.com/bitqap/bitqap/blob/main/doc/img/python_icon_s4.jpeg     
@@ -47,4 +60,5 @@ pip3 install websocker-client
 
 [linuxPipe-img]:   https://github.com/bitqap/bitqap/blob/main/doc/img/npipe_icon_s6.jpeg
 [lpipe]:           https://en.wikipedia.org/wiki/Named_pipe
+
 

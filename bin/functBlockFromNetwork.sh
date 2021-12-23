@@ -8,7 +8,6 @@ listNewBlock() {
         listMissingBlocksID=$(echo $lastBlockInLocal-$fromBlockID | bc)
         if [ $listMissingBlocksID -ge 0 ]; then
                 listMissingBlocks=$(ls -1 $BLOCKPATH | grep "solved$\|blk$"| sort -nr -k 1 | head -$listMissingBlocksID)
-                #echo "{\"command\":\"listNewBlock\",\"destinationSocket\":\"$fromSocket\",\"status\":\"0\",\"result\":{\"blockList\": [\"blk.pending\",\""$(echo ${listMissingBlocks}| awk 'BEGIN { OFS = "\",\"" } { $1 = $1; print }')\""]}}"
                 echo "{\"command\":\"listNewBlock\",\"commandCode\":\"$commandCode\",\"destinationSocket\":$fromSocket,\"status\":\"0\",\"result\":{\"blockList\": [\""$(echo ${listMissingBlocks}| awk 'BEGIN { OFS = "\",\"" } { $1 = $1; print }')\""]}}"
         fi
 }
@@ -25,7 +24,6 @@ askBlockContent() {
         hash=$(echo ${blockInfo}| jq -r '.hash')   #not use yet
         # check values are not empty. Otherwise exit 1
         [ ${#fileID} -ne 0 ] && [ ${#hash} -ne 0 ] || exit 1
-        echo $date > $tempRootFolder/0009
         fileList=$(echo ${fileList} | jq --arg dt $fileID '. + [ $dt ]') 
         # check file not exist. Otherwise ignore it with exit 1
         #[ ! -f ${BLOCKPATH}/$fileID ] && fileList=$(echo $fileList | jq --arg dt $fileID '. + [ $dt ]') || exit 1
@@ -96,7 +94,7 @@ provideBlockContent() {
 
 removeTransactionsFromPending() {
     files=$1
-    cat ${files[@]} | grep TX | while read tx; do
+    cat ${files[@]} | grep ^TX | while read tx; do
         sed -i "/$tx/d" $BLOCKPATH/blk.pending
     done
 }
@@ -119,7 +117,6 @@ AddNewBlockFromNode() {
         BlockID=$(cat $blocksTemp/$count.blk | grep BLOCKID | awk -v FS=':' '{ print $2}'| sed "s/ //g")
 
         if [ ${#BlockID} -ge 4 ] ; then
-            echo date > $tempRootFolder/0001
             mv $blocksTemp/$count.blk $blocksTemp/$BlockID
         fi
         
@@ -128,7 +125,6 @@ AddNewBlockFromNode() {
         fi
 
         if [ $(echo ${BlockID}| awk -v FS='.' '{print $3}') == "solved" ]; then
-            echo date > $tempRootFolder/0002
             checkBlockSignature $blocksTemp/$BlockID
         else
             echo "{\"command\":\"AddNewBlockFromNode\",\"destinationSocket\": $fromSocket,\"messageType\":\"direct\",\"commandCode\":\"$errorCode\",\"status\":"2",\"message\":\"Cheating in chain, block sign issue\"}"
@@ -136,7 +132,6 @@ AddNewBlockFromNode() {
         fi
 
         cat $blocksTemp/$BlockID |  grep '^TX' |while read line; do
-            echo date > $tempRootFolder/0003
             # STARTING NEW LOOP to read all TX
             validateTransactionMessage $line
             if [ $? -ne 0 ]; then
@@ -153,7 +148,6 @@ AddNewBlockFromNode() {
     [ $(ls ${blocksTemp}/*.blk | wc -l) -eq 1 ] && mv ${blocksTemp}/*.blk ${blocksTemp}/$(expr ${comingNtwrkBlockID} + 1).blk || exit 1
 
     if [ "$expcetedNtwrkBlockID" == "$comingNtwrkBlockID" ];then
-        echo date > $tempRootFolder/0005
         validateNetworkBlockHash "$blocksTemp"
         ret=$?
             if [ $ret -eq 0 ]; then
