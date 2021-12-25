@@ -14,17 +14,27 @@ BITQAP is simple blockchain project on top of **BASH** and **Python** programmin
 * Validation of mined **BLOCKS** and **Transactions** before adding BLOCKCHAIN and Pending transaction accordingly. 
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/bitqap/info/main/source/images/logo1.png" alt="BLOCHCHAIN" width="738">
+  <img src="https://raw.githubusercontent.com/bitqap/info/main/source/images/logo1.png" alt="BLOCHCHAIN" width="338">
 </p>
 
 
-`jq` and `bc` tool need to be installed on Linux system.
+`sqlite`, `jq` and `bc` tool need to be installed on Linux system.
+NOTE: `jq` version should >=1.6
 
+Debian based:
 ```
 apt-get update
-apt-get install jq bc
+apt-get install jq bc sqlite
 ```
-
+RedHat based:
+```
+yum install epel-release
+yum install sqlite bc
+# jq version 1.6 from source. Not from repo.
+wget https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64
+chmod +x jq-linux64
+sudo mv jq-linux64 /usr/bin/jq
+```
 
 `websocket_server` and `websocket-client` package need to be installed on Python3.
 
@@ -33,14 +43,22 @@ pip3 install websocket_server
 pip3 install websocker-client
 ```
 
+Support project by donation.
+
+<p align="center">
+  <img src="https://github.com/bitqap/bitqap/blob/main/doc/img/Your_Bitcoin_QR_Code.png" alt="bitcoin-wallet" width="178" height="178">
+  <img src="https://github.com/bitqap/bitqap/blob/main/doc/img/Your_Ethereum_QR_Code.png" alt="bitcoin-wallet" width="178" height="178">
+</p>
+
+
 <br />
 <br />
 <br />
 <br />
+
 
 This project is maintaining by **Fariz Muradov**. (Azerbaijan/Baku) <br />
 [![linkedin][linkedin-img]][linkedin] [![github][github-img]][github]
-
 
 [BITQAP]:          https://bitqap.github.io/info
 [bash-img]:        https://github.com/bitqap/bitqap/blob/main/doc/img/bash_readme_s6.jpeg
@@ -60,5 +78,6 @@ This project is maintaining by **Fariz Muradov**. (Azerbaijan/Baku) <br />
 
 [linuxPipe-img]:   https://github.com/bitqap/bitqap/blob/main/doc/img/npipe_icon_s6.jpeg
 [lpipe]:           https://en.wikipedia.org/wiki/Named_pipe
+
 
 

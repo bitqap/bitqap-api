@@ -1,0 +1,55 @@
+Sat Dec 25 09:44:13 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Sat Dec 25 09:44:42 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Sat Dec 25 09:51:04 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 09:51:04 UTC 2021|info|./bashCoin.sh '{"command": "peerInfo", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Sat Dec 25 09:51:06 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 09:55:46 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:20:55 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Sat Dec 25 16:21:21 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Sat Dec 25 16:22:20 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:22:21 UTC 2021|info|./bashCoin.sh '{"command": "peerInfo", "messageType": "direct", "socketID": 2}' > communicate_pipe
+Sat Dec 25 16:22:22 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:26:24 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:26:24 UTC 2021|info|./bashCoin.sh '{"command": "peerInfo", "messageType": "direct", "socketID": 3}' > communicate_pipe
+Sat Dec 25 16:26:26 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:26:26 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:26:27 UTC 2021|info|./bashCoin.sh '{"command": "peerInfo", "messageType": "direct", "socketID": 4}' > communicate_pipe
+Sat Dec 25 16:26:28 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:26:29 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:26:29 UTC 2021|info|./bashCoin.sh '{"command": "peerInfo", "messageType": "direct", "socketID": 5}' > communicate_pipe
+Sat Dec 25 16:26:30 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:26:31 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:26:31 UTC 2021|info|./bashCoin.sh '{"command": "peerInfo", "messageType": "direct", "socketID": 6}' > communicate_pipe
+Sat Dec 25 16:26:33 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:26:33 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:26:33 UTC 2021|info|./bashCoin.sh '{"command": "peerInfo", "messageType": "direct", "socketID": 7}' > communicate_pipe
+Sat Dec 25 16:26:35 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:34:34 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:34:34 UTC 2021|info|./bashCoin.sh '{"command": "peerInfo", "messageType": "direct", "socketID": 8}' > communicate_pipe
+Sat Dec 25 16:34:36 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:34:36 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:34:37 UTC 2021|info|./bashCoin.sh '{"command": "peerInfo", "messageType": "direct", "socketID": 9}' > communicate_pipe
+Sat Dec 25 16:34:38 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:34:39 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:34:39 UTC 2021|info|./bashCoin.sh '{"command": "peerInfo", "messageType": "direct", "socketID": 10}' > communicate_pipe
+Sat Dec 25 16:34:40 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:34:41 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:34:41 UTC 2021|info|./bashCoin.sh '{"command": "peerInfo", "messageType": "direct", "socketID": 11}' > communicate_pipe
+Sat Dec 25 16:34:43 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:34:43 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:34:43 UTC 2021|info|./bashCoin.sh '{"command": "peerInfo", "messageType": "direct", "socketID": 12}' > communicate_pipe
+Sat Dec 25 16:34:45 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:39:51 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:39:51 UTC 2021|info|./bashCoin.sh '{"command": "peerInfo", "messageType": "direct", "socketID": 13}' > communicate_pipe
+Sat Dec 25 16:39:53 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:39:53 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:39:53 UTC 2021|info|./bashCoin.sh '{"command": "peerInfo", "messageType": "direct", "socketID": 14}' > communicate_pipe
+Sat Dec 25 16:39:55 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 16:39:55 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 17:03:09 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 17:03:10 UTC 2021|info|./bashCoin.sh '{"command": "peerInfo", "messageType": "direct", "socketID": 16}' > communicate_pipe
+Sat Dec 25 17:03:11 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 17:03:16 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 17:03:16 UTC 2021|info|./bashCoin.sh '{"command": "peerInfo", "messageType": "direct", "myip": "$myIP", "socketID": 17}' > communicate_pipe
+Sat Dec 25 17:03:18 UTC 2021|info|./bashCoin.sh '{"command": "removeConnectionPeers", "messageType": "direct", "socketID": 1, "node": "161.97.77.132"}' > communicate_pipe
+Sat Dec 25 17:03:18 UTC 2021|info|./bashCoin.sh '{"command": "addConnectionPeers", "messageType": "direct", "socketID": 1, "node1": "161.97.69.136", "node2": "161.97.77.132"}' > communicate_pipe

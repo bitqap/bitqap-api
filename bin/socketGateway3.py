@@ -70,7 +70,6 @@ def new_client(client, server):
     if client['address'][0] != '127.0.0.1':
         nodeMessage={"command":"addConnectionPeers","messageType":"direct","socketID":WhereBashCoin(clients,'destinationSocketBashCoin','yes','id'),"node1":localPublicIP,"node2":str(client['address'][0])}
         print (nodeMessage)
-        #server.send_message(clients[client['id']], str(nodeMessage).replace("u'","'").replace("'","\""))
         server.send_message(clients[WhereBashCoin(clients,'destinationSocketBashCoin','yes','id')], str(nodeMessage).replace("u'","'").replace("'","\""))
 
 
@@ -88,7 +87,7 @@ def msg_received(client, server, msg):
             if client['id'] in getRoot():
             ################################# MESAGE FROM LOCALHOST  #################################
                 if 'destinationSocket' in msg:
-                    # this message comes from bashCoin.sh. Becasue SH script sets destinationSocket based on SocketID.
+                    #  this message comes from bashCoin.sh. Becasue SH script sets destinationSocket based on SocketID.
                     #  and socketID setting by this script before sending to client[]
                     destination=msg['destinationSocket']
                     print ("-------\n 000 TO -> "+str(destination)+"\n"+"MSG -> "+str(msg))
@@ -106,7 +105,7 @@ def msg_received(client, server, msg):
                             del integer_map
                         else:
                             exceptID.append(WhereBashCoin(clients,'destinationSocketBashCoin','yes','id'))
-                        ## MAKE THIS BY SECRET FILE CODE
+                        # MAKE THIS BY SECRET FILE CODE
                         # python3 wsdump.py  -r --text '{"command":"nothing","appType":"nothing","destinationSocketBashCoin":"yes"}' ws://127.0.0.1:8001
                         for i in clients:
                             if clients[i]['id'] not in exceptID:
@@ -124,11 +123,10 @@ def msg_received(client, server, msg):
                         cl = clients[destination]
                         server.send_message(cl, str(msg).replace("u'","'").replace("'","\""))
             else:
-            ################################### MESAGE FROM EXTERNAL ########################
+            ################################### MESAGE FROM EXTERNAL ###################################
                 ## SECURITY: put command list from external to internal.
-                if msg['command'] in ['help','AddNewBlockFromNode','provideBlockContent','notification','nothing','listNewBlock','getTransactionMessageForSign','checkbalance','pushSignedMessageToPending','provideTXMessage','AddTransactionFromNetwork','price']:
+                if msg['command'] in ['help','peerInfo','addConnectionPeers','removeConnectionPeers','AddNewBlockFromNode','provideBlockContent','notification','nothing','listNewBlock','getTransactionMessageForSign','checkbalance','pushSignedMessageToPending','provideTXMessage','AddTransactionFromNetwork','price']:
                     # socketID is message originator always
-                    #msg.update({'socketID':client['id']})
                     if msg['messageType']=='direct':
                         ## MAKE THIS BY SECRET FILE CODE
                         print ("-------\n 003 TO -> "+str(WhereBashCoin(clients,'destinationSocketBashCoin','yes','id'))+"\n"+"MSG -> "+str(msg))

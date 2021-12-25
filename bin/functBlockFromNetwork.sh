@@ -48,6 +48,7 @@ validateNetworkBlockHash() {
                         else
                             h=`ls -1 | grep solved$ | sort -n| grep -B 1 $i | head -1`
                         fi
+                        [ ${#h} -le 2 ] && exit 1     # it means, next file name is not exist. Probably .blk file (next ID)
                         PREVHASH=`md5sum $h | cut -d" " -f1`
                         j=`ls -1 | egrep "solved$|blk$" | sort -n| grep -A 1 $i | head -2| grep -v $i | tail -1`
                         CALCHASH=`sed "2c$PREVHASH" $i | md5sum | cut -d" " -f1`

@@ -430,13 +430,16 @@ case "$command" in
                         removeConnectionPeers $@
                         exit 0
                         ;;
+        peerInfo)
+                        peerInfo
+                        exit 0
+                        ;;
         nothing)        
                         ## this is dummy for troubleshooting. Never mind
                         exit 0
                         ;;
         notification)
                         notification $@
-                        #echo $jsonMessage
                         exit 0
                         ;;
         terminateMessaging)

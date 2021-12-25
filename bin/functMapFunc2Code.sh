@@ -52,6 +52,14 @@ mapFunction2Code () {
                                 code=402
                                 name=AddTransactionFromNetwork
                                 ;;
+                addConnectionPeers)
+                                code=501
+                                name=addConnectionPeers
+                                ;;
+                removeConnectionPeers)
+                                code=502
+                                name=removeConnectionPeers
+                                ;;
                 terminateMessaging|001)
                                 code=001
                                 name=terminateMessaging
@@ -131,12 +139,16 @@ mapERRORFunction2Code () {
                                 code=1524
                                 name=askBlockContent
                                 ;;
-                updateNetworkInfo)
+                addConnectionPeers)
                                 code=1401
-                                name=updateNetworkInfo
+                                name=addConnectionPeers
+                                ;;
+                removeConnectionPeers)
+                                code=1402
+                                name=removeConnectionPeers
                                 ;;
                 *)
-                                code=000
+                                code=0000
                                 ;;
                 esac
         echo $code
