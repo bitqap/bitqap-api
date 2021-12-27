@@ -1,5 +1,11 @@
 # THIS FUNCTIONS FOR IP PEERS
 
+ping() {
+	fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
+	echo "{\"command\":\"ping\",\"messageType\":\"direct\",\"from\":\"$(hostname)\",\"status\":0}"
+}
+
+
 initializeDB() {
 	# create table if not exist. 
 	# UNIQUE fields
@@ -57,7 +63,6 @@ peerInfo() {
 	msg={\"command\":\"peerInfo\",\"messageType\":\"direct\",\"destinationSocket\":$fromSocket,\"status\":0,\"result\":$PeersList}
 	echo $msg
 }
-
 
 
 

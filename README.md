@@ -11,7 +11,10 @@ BITQAP is simple blockchain project on top of **BASH** and **Python** programmin
   Neighbors that, after being added to the local blockchain, also broadcast to their neighbors.
 * **Coin** sending to PubKeyHash(SHA256) wallet address by Private Key signature.
 * **Transaction** Boradcasing via Neighbors.
-* Validation of mined **BLOCKS** and **Transactions** before adding BLOCKCHAIN and Pending transaction accordingly. 
+* Validation of mined **BLOCKS** and **Transactions** before adding BLOCKCHAIN and Pending transaction accordingly.
+* Discover nodes via boot node.
+* Connection to peers based on the connection weight.
+* High-performance mining (by replacing C programming code with mining peace code).
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/bitqap/info/main/source/images/logo1.png" alt="BLOCHCHAIN" width="338">
@@ -78,6 +81,7 @@ This project is maintaining by **Fariz Muradov**. (Azerbaijan/Baku) <br />
 
 [linuxPipe-img]:   https://github.com/bitqap/bitqap/blob/main/doc/img/npipe_icon_s6.jpeg
 [lpipe]:           https://en.wikipedia.org/wiki/Named_pipe
+
 
 
 

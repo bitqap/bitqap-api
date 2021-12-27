@@ -137,16 +137,16 @@ buildWIPBlock () {
         DATE=$(date -u)
         # Actually sign should be sent by Wallet or Mine App. Because they keep private key
         #SIGN=$1
-        printf "`cat $CURRENTBLOCK`\n"    >  $CURRENTBLOCK.wip
-        printf "HEADERS:\n"               >> $CURRENTBLOCK.wip
+        printf "`cat $CURRENTBLOCK`\n"          >  $CURRENTBLOCK.wip
+        printf "HEADERS:\n"                     >> $CURRENTBLOCK.wip
         printf "BLOCKID:$CURRENTBLOCK.solved\n" >> $CURRENTBLOCK.wip
-        printf "Version:$version\n"      >> $CURRENTBLOCK.wip
-        printf "Difficulty:$DIFF\n"      >> $CURRENTBLOCK.wip
-        printf "DateTime:$DATE\n"        >> $CURRENTBLOCK.wip
+        printf "Version:$version\n"             >> $CURRENTBLOCK.wip
+        printf "Difficulty:$DIFF\n"             >> $CURRENTBLOCK.wip
+        printf "DateTime:$DATE\n"               >> $CURRENTBLOCK.wip
         echo  >> $CURRENTBLOCK.wip
         echo  >> $CURRENTBLOCK.wip
         ## this is valid transactions
-        validateTransactionsForMine >> $CURRENTBLOCK.wip
+        validateTransactionsForMine             >> $CURRENTBLOCK.wip
         ## build transaction for reward (need to add sign also)
         SENDER=$(cat ${publicKeyFile}| sha256sum | cut -d" " -f1)
         dateTime=$(date "+%Y%m%d%H%M%S")
@@ -189,7 +189,7 @@ mine () {
                 # if file exist already, it means already someone mined and added as a file.
                 # return ERROR and exit. Let cliend send again mine command to mine next block.
                 echo "{\"command\":\"mine\",\"commandCode\":\"$errorCode\",\"appType\":\"$appType\",\"messageType\":\"direct\",\"status\":\"2\", \"timeUTC\":\"$(date -u  +"%Y%m%d%H%M%S")\",\"message\":\"$CURRENTBLOCK is already added by someone in the network\"}"
-                # destroy tmp BLOCK file with included transactions
+                # destroy tmp BLOCK file with included transactions.
                 rm -f $CURRENTBLOCK.wip
                 exit 1
 
@@ -432,6 +432,10 @@ case "$command" in
                         ;;
         peerInfo)
                         peerInfo
+                        exit 0
+                        ;;
+        ping)
+                        ping $@
                         exit 0
                         ;;
         nothing)        
