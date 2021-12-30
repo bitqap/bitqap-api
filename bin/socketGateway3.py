@@ -12,6 +12,7 @@ import requests
 threads = []
 clients = {}
 
+#   {"command":"ping","messageType":"direct","status":0}
 #   {"command":"mine","appType":"wallet"} / {"command":"mine","appType":"miner","messageType":"direct"}
 #   {"command":"notification","messageType":"direct"}
 #   {"command":"checkbalance","ACCTNUM":"50416596951b715b7e8e658de7d9f751fb8b97ce4edf0891f269f64c8fa8e034","messageType":"direct"}

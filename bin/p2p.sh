@@ -2,7 +2,7 @@
 
 ping() {
 	fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
-	echo "{\"command\":\"ping\",\"messageType\":\"direct\",\"from\":\"$(hostname)\",\"status\":0}"
+	echo "{\"command\":\"ping\",\"messageType\":\"direct\",\"destinationSocket\":$fromSocket,\"from\":\"$(hostname)\",\"status\":0}"
 }
 
 

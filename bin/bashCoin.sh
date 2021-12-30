@@ -171,18 +171,23 @@ mine () {
         ## THIS MESSAGE IS BROADCAST
         fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
         # start mining, check to see if the hash starts with the winning number of zeros and if it does complete the loop
-        while [ $ZEROS != $DIFFZEROS ]
-        do
+        # if CMINING = 1 it means Calculate HASH by C code
+        if [ $CMINING -eq 0 ] ; then
+                while [ $ZEROS != $DIFFZEROS ]
+                do
                         # increase the nonce by one
                         let "NONCE += 1"
                         # do the hashing
                         HASH=$(printf "`cat $CURRENTBLOCK.wip`\n\n## Nonce: #################################################################################\n$NONCE\n" | md5sum)
                         HASH=$(echo $HASH | cut -d" " -f1)
-                        # print the hash to the screen because it looks cool
-                        #echo $HASH
                         # cut the leading zeros off the hash
                         ZEROS=$(echo $HASH | cut -c1-$DIFF)
-        done
+                done
+        elif [ $CMINING -eq 1 ]; then
+                hash_and_nonce=$($ROOTDIR/bin/mine.o $CURRENTBLOCK.wip $ZEROS $DIFFZEROS $DIFF)
+                export HASH=$(echo ${hash_and_nonce}| awk '{print $1}')
+                export NONCE=$(echo ${hash_and_nonce}| awk '{print $2}')
+        fi
 
         # THIS IS IMPORTANT STEP
         if [ -f $CURRENTBLOCK.solved ]; then 
@@ -192,7 +197,6 @@ mine () {
                 # destroy tmp BLOCK file with included transactions.
                 rm -f $CURRENTBLOCK.wip
                 exit 1
-
         fi 
         printf "`cat $CURRENTBLOCK.wip`\n\n## Nonce: #################################################################################\n$NONCE\n" > $CURRENTBLOCK.solved
 
@@ -216,6 +220,7 @@ mine () {
         # send askBlockContent 
         echo "{\"command\":\"notification\",\"host\":\"$(hostname)\",\"commandCode\":\"301\",\"messageType\":\"broadcast\",\"status\":\"0\", \"result\":[\"${CURRENTBLOCK}.solved\",\"${NEXTBLOCK}\"]}"
 
+        cp $CURRENTBLOCK.wip /root/bashCo1/data
         rm -f $CURRENTBLOCK.wip
         rm -f $CURRENTBLOCK
 }
@@ -335,10 +340,8 @@ validate() {
                         CALCHASH=`sed "2c$PREVHASH" $i | md5sum | cut -d" " -f1`
                         REPORTEDHASH=`sed -n '2p' $j` 
                         [[ $CALCHASH != $REPORTEDHASH ]] && 
-                        echo "{ \"command\":\"validate\", \"status\":2,\"destinationSocket\":$fromSocket,\"message\":\"Hash mismatch!  $i has changed!  Do not trust any block after and including $i\"}" &&
-                        exit 1
-                        #echo "Hash mismatch!  $i has changed!  Do not trust any block after and including $i"
-                        #echo "Hashes match! $i is a good block."
+                                echo "{ \"command\":\"validate\", \"status\":2,\"destinationSocket\":$fromSocket,\"message\":\"Hash mismatch!  $i has changed!  Do not trust any block after and including $i\"}" &&
+                                exit 1
         done
         #echo "{ \"command\":\"validate\", \"status\":0,\"destinationSocket\":\"$fromSocket\",\"message\":\"Good blocks\"}"
 }

@@ -1,6 +1,12 @@
-// example.c
+// mine.c
 //
 // gcc mine.c -lssl -lcrypto -o mine.o
+//
+// ## USAGE
+// ./mine.o file.txt ff  000 3
+// ./mine.o file.txt ff  00 2
+// ./mine.o file.txt ff  0 1
+
 
 #include <openssl/evp.h>
 #include <stdio.h>
@@ -55,7 +61,7 @@ int main(int argc, char *argv[]) {
 
         char * ZEROS=argv[2];
         char * DIFFZEROS=argv[3];
-		printf("Length of string DIFFZEROS = %zu \n",strlen(DIFFZEROS));
+		//printf("Length of string DIFFZEROS = %zu \n",strlen(DIFFZEROS));
         
         int DIFF = strtol(argv[4], NULL, 10);
 
@@ -70,16 +76,15 @@ int main(int argc, char *argv[]) {
         while (1) {
                 NONCE++ ;
                 strcpy(BUFFER,buffer);    // file content read once in above. Always reconstruct BUFFER (raw file content)
-                strcat(BUFFER,"\n\n## Nonce: #################################################################################\n");
+                strcat(BUFFER,"\n## Nonce: #################################################################################\n");
                 sprintf(nonce, "%d\n", NONCE);                    // convert int NONCE to nonce as string
                 strcat(BUFFER,nonce);                             // concatinate 
                 bytes2md5(BUFFER, strlen(BUFFER), md5);           // calculate md5sum
                 substring(md5, ZEROS, 1, DIFF);                   // substring defined zeros
-                
+
                 // https://stackoverflow.com/questions/8004237/how-do-i-properly-compare-strings-in-c
                 if (strcmp(ZEROS,DIFFZEROS) == 0) {
                         printf(md5); printf("  "); printf(nonce); // if HASH found print HASH and NONCE
-                        printf("\n");
                         break ; 
                 }        
                 // EMPTY vars

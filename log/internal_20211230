@@ -1,0 +1,144 @@
+Thu Dec 30 19:21:41 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:04 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "status": 0, "socketID": 2}' > communicate_pipe
+Thu Dec 30 19:23:04 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:04 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:04 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:05 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:05 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:05 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:05 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:06 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:06 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:06 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:07 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:07 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:07 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:07 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:08 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:08 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:08 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:09 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:09 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:09 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:09 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:10 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:10 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:10 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:10 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:11 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:11 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:11 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:12 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:12 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:12 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:12 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:13 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:13 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:13 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:13 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:14 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:14 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:14 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:15 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:15 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:15 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:15 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:16 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:16 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:16 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:16 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:17 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:17 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:17 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:18 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:18 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:18 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:18 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:19 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:19 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:19 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:19 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:20 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:20 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:20 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:21 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:21 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:21 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:21 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:22 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:22 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:22 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:22 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:23 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:23 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:23 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:24 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:24 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:24 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:24 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:25 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:25 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:25 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:25 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:26 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:26 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:26 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:27 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:27 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:27 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:27 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:28 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:28 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:28 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:28 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:29 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:29 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:29 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:30 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:30 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:30 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:30 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:31 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:31 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:31 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:31 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:32 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:32 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:32 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:33 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:33 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:33 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:33 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:34 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:34 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:34 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:35 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:35 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:35 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:35 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:36 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:36 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:36 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:36 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:37 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:37 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:37 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:37 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:38 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:38 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:38 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:39 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "destinationSocket": 1, "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:39 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "destinationSocket": 1, "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:39 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "destinationSocket": 1, "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:39 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "destinationSocket": 1, "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:40 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "destinationSocket": 1, "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:40 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "destinationSocket": 1, "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:40 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "destinationSocket": 1, "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:40 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "destinationSocket": 1, "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:41 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "destinationSocket": 1, "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:41 UTC 2021|error|./bashCoin.sh '{"command": "ping", "messageType": "direct", "destinationSocket": 1, "from": "istehkam.com", "status": 0, "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:44 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:23:51 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "status": 0, "socketID": 2}' > communicate_pipe
+Thu Dec 30 19:23:58 UTC 2021|info|./bashCoin.sh '{"command": "ping", "messageType": "direct", "status": 0, "socketID": 2}' > communicate_pipe
+Thu Dec 30 19:45:01 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
+Thu Dec 30 19:46:31 UTC 2021|info|./bashCoin.sh '{"command": "nothing", "appType": "nothing", "destinationSocketBashCoin": "yes", "messageType": "direct", "socketID": 1}' > communicate_pipe
