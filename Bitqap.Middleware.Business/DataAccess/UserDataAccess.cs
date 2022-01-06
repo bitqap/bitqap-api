@@ -22,35 +22,77 @@ namespace Bitqap.Middleware.Business.DataAccess
         public async Task<User> Create(User entity)
         {
             using var connection = new SqliteConnection(_dbConnection);
-
-            entity.Id = await connection.ExecuteScalarAsync<long>("INSERT INTO User (Username, Firstname,Lastname,Password,RegisterDate)" +
-              "VALUES (@Username, @Firstname,@Lastname,@Password,@RegisterDate) returning id", entity);
+            var query = @"INSERT INTO User(Username, Firstname, Lastname, Password, RegisterDate)" +
+              "VALUES (@Username, @Firstname,@Lastname,@Password,@RegisterDate) returning id";
+            entity.RegisterDate = DateTime.Now;
+            entity.Id = await connection.ExecuteScalarAsync<long>(query, entity);
             return entity;
         }
 
         public async Task DeleteById(long id)
         {
-            throw new NotImplementedException();
+            using var connection = new SqliteConnection(_dbConnection);
+            var query = @"DELETE FROM User
+                                            WHERE ID = @id";
+            var parameters = new { id = id };
+            await connection.ExecuteAsync(query, parameters);
         }
 
         public async Task<User> FindById(long id)
         {
-            throw new NotImplementedException();
+            using var connection = new SqliteConnection(_dbConnection);
+            var query = @"SELECT ID,
+                               Username,
+                               Firstname,
+                               Lastname,
+                               Password,
+                               RegisterDate
+                          FROM User where ID=@id";
+            var parameters = new { id = id };
+            return await connection.QueryFirstOrDefaultAsync<User>(query, parameters);
         }
 
-        public Task<User> FindByUsername(string username)
+        public async Task<User> FindByUsername(string username)
         {
-            throw new NotImplementedException();
+            using var connection = new SqliteConnection(_dbConnection);
+            var query = @"SELECT ID,
+                               Username,
+                               Firstname,
+                               Lastname,
+                               Password,
+                               RegisterDate
+                          FROM User where Username=@username";
+            var parameters = new { username = username};
+            return await connection.QueryFirstOrDefaultAsync<User>(query, parameters);
         }
 
-        public async Task<IQueryable<User>> GelAll()
+        public async Task<IEnumerable<User>> GelAll()
         {
-            throw new NotImplementedException();
+            using var connection = new SqliteConnection(_dbConnection);
+            var query = @"SELECT ID,
+                               Username,
+                               Firstname,
+                               Lastname,
+                               Password,
+                               RegisterDate
+                          FROM User";
+
+            return await connection.QueryAsync<User>(query);
         }
 
         public async Task<User> Update(User entity)
         {
-            throw new NotImplementedException();
+            using var connection = new SqliteConnection(_dbConnection);
+            var query = @"UPDATE User
+                           SET
+                               Username = @username,
+                               Firstname = @firstname,
+                               Lastname = @lastname,
+                               Password = @password
+                         WHERE ID = @id";
+            var parameters = new { username = entity.Username, firstname = entity.Firstname, lastname = entity.Lastname, password = entity.Password, id=entity.Id };
+            await connection.ExecuteAsync(query,parameters);
+            return entity;
         }
     }
 }

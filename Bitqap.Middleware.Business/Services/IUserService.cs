@@ -10,5 +10,6 @@ namespace Bitqap.Middleware.Business.Services
     public interface IUserService
     {
         Task<User> RegisterNewUser(User entity);
+        Task<User> LoginUser(LoginRequest entity);
     }
 }

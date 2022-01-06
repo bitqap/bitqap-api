@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Bitqap.Middleware.Business.DataAccess
 {
-    public interface IUserDataAccess: IBaseDateAccess<User>
+    public interface IUserDataAccess: IBaseDataAccess<User>
     {
         Task<User> FindByUsername(string username);
     }

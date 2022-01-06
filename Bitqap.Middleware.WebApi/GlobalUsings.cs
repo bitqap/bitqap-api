@@ -19,3 +19,4 @@ global using System.Text;
 global using Microsoft.AspNetCore.Authorization;
 global using Bitqap.Middleware.Business.DataAccess;
 global using Bitqap.Middleware.Business.Services;
+global using AutoMapper;
