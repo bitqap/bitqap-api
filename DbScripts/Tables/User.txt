@@ -1,0 +1,8 @@
+CREATE TABLE User (
+    ID           INTEGER       PRIMARY KEY AUTOINCREMENT,
+    Username     VARCHAR (50)  UNIQUE,
+    Firstname    VARCHAR (100),
+    Lastname     VARCHAR (100),
+    Password     VARCHAR (50),
+    RegisterDate DATETIME
+);
