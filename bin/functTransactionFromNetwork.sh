@@ -21,6 +21,7 @@ getTransactionMessageForSign() {
         AMOUNT=$(echo ${jsonMessage}  | jq -r '.AMOUNT'|sed "s/\"//g")
         FEE=$(echo ${jsonMessage}  | jq -r '.FEE'|sed "s/\"//g")
         DATEEE=$(echo ${jsonMessage}  | jq -r '.DATEEE'|sed "s/\"//g")
+        requestID=$(echo ${jsonMessage}  | jq -r '.requestID' | sed "s/\"//g")
 
         [[ -z $FEE ]] && echo "ERROR: You need to set FEE for miners validation." && exit
         [ $AMOUNT -le $FEE ] && echo "ERROR: Fee alwasys should be less than AMOUNT" && exit
@@ -50,7 +51,7 @@ getTransactionMessageForSign() {
 
         ## ADDING BY SYSTEM 
         CHANGE=`echo $TOTAL-$AMOUNT-$FEE | bc`
-        echo "{ \"command\":\"getTransactionMessageForSign\",\"messageType\":\"direct\", \"status\":0,\"destinationSocket\":$fromSocket,\"result\":{\"forReciverData\":\"$SENDER:$RECEIVER:$AMOUNT:$FEE:$dateTime\",\"forSenderData\":\"$SENDER:$SENDER:$CHANGE:0:$dateTime\"}}"
+        echo "{ \"command\":\"getTransactionMessageForSign\",\"responseID\":\"$requestID\",\"messageType\":\"direct\", \"status\":0,\"destinationSocket\":$fromSocket,\"result\":{\"forReciverData\":\"$SENDER:$RECEIVER:$AMOUNT:$FEE:$dateTime\",\"forSenderData\":\"$SENDER:$SENDER:$CHANGE:0:$dateTime\"}}"
 }
 
 pushSignedMessageToPending() {
@@ -68,6 +69,7 @@ pushSignedMessageToPending() {
     ## here we can validate it first before pushing to Pending Transaction
     txIDReciever=$(echo ${forReciverData}| awk -v FS=':' '{print $1}')
     txIDSender=$(  echo ${forSenderData} | awk -v FS=':' '{print $1}')
+    requestID=$(echo ${jsonMessage}  | jq -r '.requestID'| sed "s/\"//g")
     recordExist=$(cat $BLOCKPATH/blk.pending | grep  "$txIDReciever\|$txIDSender")
     if [ ${#recordExist} -le 5 ]; then 
         validateTransactionMessage $forReciverData || exit 1
@@ -77,7 +79,7 @@ pushSignedMessageToPending() {
                 echo "{\"command\":\"notification\",\"status\":0,\"commandCode\":\"401\",\"status\":0,\"messageType\":\"broadcast\",\"result\":[\"$txIDReciever\",\"$txIDSender\"]}"
         fi
      else
-        echo "{\"command\":\"pushSignedMessageToPending\",\"commandCode\":\"$commandCode\",\"status\":\"$errorCode\",\"messageType\":\"direct\",\"destinationSocket\":$fromSocket,\"commandCode\":\"$commandCode\"}"      
+        echo "{\"command\":\"pushSignedMessageToPending\",\"responseID\":\"$requestID\",\"commandCode\":\"$commandCode\",\"status\":\"$errorCode\",\"messageType\":\"direct\",\"destinationSocket\":$fromSocket,\"commandCode\":\"$commandCode\"}"      
      fi
 }
 
@@ -87,6 +89,7 @@ provideTXMessage() {
         errorCode=$(mapFunction2Code ${FUNCNAME[0]})
         fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
         txList=$(echo ${jsonMessage} | jq -r '.result')
+        requestID=$(echo ${jsonMessage}  | jq -r '.requestID'| sed "s/\"//g")
         fullTXmessages=[]
         for TX in $(echo ${txList}| jq -c .[]); do
                 TX=$(echo ${TX}| sed "s/\"//g")
@@ -103,7 +106,7 @@ provideTXMessage() {
                 msg=$(echo "{\"command\":\"AddTransactionFromNetwork\",\"messageType\":\"direct\",\"destinationSocket\": $fromSocket,\"status\":0,\"commandCode\":\"$commandCode\",\"result\":$fullTXmessages }"|tr '\n' ' ' | sed 's/ //g'  )
                 echo $msg
         else
-                msg=$(echo "{\"command\":\"AddTransactionFromNetwork\",\"messageType\":\"direct\",\"destinationSocket\": $fromSocket,\"status\":$errorCode,\"commandCode\":\"$commandCode\",\"result\":$fullTXmessages }"|tr '\n' ' ' | sed 's/ //g'  )        
+                msg=$(echo "{\"command\":\"AddTransactionFromNetwork\",\"responseID\":\"$requestID\",\"messageType\":\"direct\",\"destinationSocket\": $fromSocket,\"status\":$errorCode,\"commandCode\":\"$commandCode\",\"result\":$fullTXmessages }"|tr '\n' ' ' | sed 's/ //g'  )        
                 echo $msg
         fi
 }
@@ -111,6 +114,7 @@ provideTXMessage() {
 AddTransactionFromNetwork() {
         commandCode=$(mapFunction2Code ${FUNCNAME[0]} code)
         fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
+        requestID=$(echo ${jsonMessage}  | jq -r '.requestID'| sed "s/\"//g")
         txIDlist=[]
         exceptSocket=[]
         for transactions in $(echo ${jsonMessage}| jq -r '.result'| jq -c .[]); do
@@ -123,7 +127,7 @@ AddTransactionFromNetwork() {
         done
         echo $txIDlist > $tempRootFolder/txIDlist
         exceptSocket=$(echo ${exceptSocket} | jq --arg dt $fromSocket '. + [ $dt ]'|sed "s/\"//g" )
-        msg=$(echo "{\"command\":\"notification\",\"tag\":\"FFFFx0\",\"status\":0,\"commandCode\":\"$commandCode\",\"status\":0,\"exceptSocket\":$exceptSocket,\"messageType\":\"broadcast\",\"result\":$txIDlist}"| tr '\n' ' ' | sed 's/ //g')
+        msg=$(echo "{\"command\":\"notification\",\"tag\":\"FFFFx0\",\"responseID\":\"$requestID\",\"status\":0,\"commandCode\":\"$commandCode\",\"status\":0,\"exceptSocket\":$exceptSocket,\"messageType\":\"broadcast\",\"result\":$txIDlist}"| tr '\n' ' ' | sed 's/ //g')
         echo $msg
 }
 

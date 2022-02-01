@@ -27,7 +27,7 @@ ppassword() {
         ## this function created global Password variable to put OpenSSL command line.
         ## it can be change in socket development
 
-                ##  NEED TO CHACK IF PASSWORD REQUIRED ###
+        ##  NEED TO CHACK IF PASSWORD REQUIRED ###
         unset Password
         prompt="Enter Password:"
         while IFS= read -p "$prompt" -r -s -n 1 char
@@ -171,6 +171,7 @@ mine () {
         ## THIS MESSAGE IS BROADCAST
         fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
         # start mining, check to see if the hash starts with the winning number of zeros and if it does complete the loop
+        
         # if CMINING = 1 it means Calculate HASH by C code
         if [ $CMINING -eq 0 ] ; then
                 while [ $ZEROS != $DIFFZEROS ]
@@ -197,7 +198,8 @@ mine () {
                 # destroy tmp BLOCK file with included transactions.
                 rm -f $CURRENTBLOCK.wip
                 exit 1
-        fi 
+        fi
+
         printf "`cat $CURRENTBLOCK.wip`\n\n## Nonce: #################################################################################\n$NONCE\n" > $CURRENTBLOCK.solved
 
         if [ $? -eq 0 ]; then
@@ -212,7 +214,6 @@ mine () {
         # Setup the next block.  Add previous hash first
         printf "## Previous Block Hash: ###################################################################\n" >> $NEXTBLOCK
         printf "$HASH\n\n" >> $NEXTBLOCK
-
 
         NEXT_BASE64=$(cat ${NEXTBLOCK}| base64 |tr '\n' ' ' | sed 's/ //g')
         CURRENTBLOCK_BASE64=$(cat ${CURRENTBLOCK}.solved | base64 |tr '\n' ' ' | sed "s/ //g")
@@ -266,6 +267,7 @@ checkAccountBal () {
         errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
         fromSocket=$(echo ${jsonMessage}  | jq -r '.socketID')
         ACCTNUM=$(echo ${jsonMessage}  | jq -r '.ACCTNUM')
+        requestID=$(echo ${jsonMessage}  | jq -r '.requestID'| sed "s/\"//g")
         #ACCTNUM=$1
         #return_row=$2
         # Get the value of the last change transaction (the last time a user sent money back to themselves) if it exists
@@ -319,7 +321,7 @@ checkAccountBal () {
         TOTAL=`echo $LASTCHANGE+$RECAFTERCHANGE+$SUM | bc`
         #echo "Current Balance for $ACCTNUM:     $TOTAL"
         #echo "{\'command\':'getBalance\',\'publicKeyHASH256\':\'$ACCTNUM\',\'status\':\'0\',\'balance\':\'$TOTAL\',\'description\':\'none\'}"
-        echo "{\"command\":\"checkbalance\",\"commandCode\":\"$commandCode\",\"messageType\":\"direct\" , \"status\":\"0\",\"destinationSocket\":$fromSocket,\"result\":{\"publicKeyHASH256\":\"$ACCTNUM\",\"balance\":\"$TOTAL\"}}"
+        echo "{\"command\":\"checkbalance\",\"responseID\":\"$requestID\",\"commandCode\":\"$commandCode\",\"messageType\":\"direct\" , \"status\":\"0\",\"destinationSocket\":$fromSocket,\"result\":{\"publicKeyHASH256\":\"$ACCTNUM\",\"balance\":\"$TOTAL\"}}"
 }
 
 
