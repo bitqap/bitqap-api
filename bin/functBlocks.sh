@@ -39,7 +39,7 @@ validateNetworkBlockHash() {
         flagByPassFolder=1   # only in first attempt.
         errorCode=$(mapERRORFunction2Code ${FUNCNAME[0]})
         cd $folder
-        # Check that there are blocks to validate
+        # Check that there are blocks to validate.
         getLastBlockToAdd=$(ls -1 $BLOCKPATH| grep solved$ |sort -n| tail -n 1)
         for i in `ls -1 *solved| sort -n| tail -n +1`; do
                         if [ "$flagByPassFolder" == "1" ]; then
@@ -162,7 +162,8 @@ AddNewBlockFromNode() {
                 msg=$(echo "{\"command\":\"notification\",\"tag\":\"FFFFx0\",\"status\":0,\"commandCode\":\"301\",\"messageType\":\"broadcast\",\"exceptSocket\":$exceptSocket,\"result\":$fileIDs}" |tr '\n' ' ' | sed 's/ //g' )
                 echo $msg
             fi
-    else
+    else    
+            # we can add LIST missed block to get all. 
             echo "{\"command\":\"AddNewBlockFromNode\",\"host\":\"$(pwd)\",\"commandCode\":\"$commandCode\",\"messageType\":\"direct\",\"destinationSocket\": $fromSocket,\"status\":$errorCode,\"message\":\"Function: validateNetworkBlockHash , Folder:$blocksTemp, firstFileNetwID=$firstFileNetwID and lastFileCurrIDplus1=$lastFileCurrIDplus1 Chain ID $BlockID is not matching\"}"
             exit 1
     fi
