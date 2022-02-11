@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Bitqap.Middleware.Entity.ApiEntity
+namespace Bitqap.Middleware.Entity.BusinessEntity
 {
     public  class User
     {

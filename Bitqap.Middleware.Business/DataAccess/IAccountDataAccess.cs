@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Bitqap.Middleware.Entity.BusinessEntity;
 
 namespace Bitqap.Middleware.Business.DataAccess
 {
-    internal interface IAccountDataAccess
+    public interface IAccountDataAccess : IBaseDataAccess<Account>
     {
+        Task<Account> FindByAccountKey(string accountKey);
+        Task<Account> FindByUserId(string userId);
     }
 }

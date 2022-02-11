@@ -9,16 +9,20 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options => {
     options.InvalidModelStateResponseFactory = actionContext =>
     {
         var modelState = actionContext.ModelState.Values;
-        var errorList = modelState.Select(x => x.Errors.Select(y=>y.ErrorMessage)).Select(c=>c.FirstOrDefault()).ToList();
+        var errorList = modelState.Select(x => x.Errors.Select(y => y.ErrorMessage)).Select(c => c.FirstOrDefault()).ToList();
         var errorDetails = new ErrorDetails
         { Message = "Invalid request body", StatusCode = "VALIDATION", Errors = errorList };
         logger.Log(NLog.LogLevel.Error, $"Validation exception --> {System.Text.Json.JsonSerializer.Serialize(errorDetails)}");
         return new BadRequestObjectResult(errorDetails);
     };
+})
+    .AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
 });
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(options => {
     options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
@@ -55,9 +59,18 @@ var apiInjectedSettings = servicepoint.GetService<IOptions<ApiSettings>>();
 
 //dependency injection
 IUserDataAccess userDataAccess = new UserDataAccess(apiInjectedSettings.Value.DbConnection);
-IUserService userService = new UserService(userDataAccess);
+IAccountDataAccess accountDataAccess = new AccountDataAccess(apiInjectedSettings.Value.DbConnection);
+IMessagePayloadDataAccess msgPayloadDataAccess = new MessagePayloadDataAccess(apiInjectedSettings.Value.DbConnection);
+IMappingExtension mappingExtension = new MappingExtension(); 
+IUserService userService = new UserService(userDataAccess, mappingExtension);
+IMessagePayloadService msgPayloadService = new MessagePayloadService(msgPayloadDataAccess);
+SocketClient socketClient = SocketClient.GetInstance(apiInjectedSettings.Value, msgPayloadService);
+IAccountService accountService = new AccountService(accountDataAccess, socketClient, userService, msgPayloadService, mappingExtension, apiInjectedSettings.Value);
 
+builder.Services.AddSingleton<IMessagePayloadDataAccess>(msgPayloadDataAccess);
 builder.Services.AddSingleton<IUserService>(userService);
+builder.Services.AddSingleton<IAccountService>(accountService);
+builder.Services.AddSingleton<IMappingExtension>(mappingExtension);
 
 //configure jwt auth
 builder.Services.AddAuthentication(options =>

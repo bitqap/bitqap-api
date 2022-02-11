@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bitqap.Middleware.Business.DataAccess
+﻿namespace Bitqap.Middleware.Business.DataAccess
 {
     public interface IBaseDataAccess<T> where T : class
     {
@@ -13,6 +7,5 @@ namespace Bitqap.Middleware.Business.DataAccess
         Task DeleteById(long id);
         Task<IEnumerable<T>> GelAll();
         Task<T> FindById(long id);
-
     }
 }

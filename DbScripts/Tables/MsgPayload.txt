@@ -1,0 +1,9 @@
+CREATE TABLE MsgPayload (
+    Id             INTEGER       PRIMARY KEY AUTOINCREMENT,
+    MethodName     VARCHAR (200),
+    RequestKey     VARCHAR (200),
+    Payload        TEXT,
+    Direction      VARCHAR (10),
+    CreateDateTime DATETIME      DEFAULT (datetime('now','localtime') ) ,
+    UserId         INTEGER
+);

@@ -1,9 +1,4 @@
-﻿using Bitqap.Middleware.Entity.ApiEntity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Bitqap.Middleware.Entity.BusinessEntity;
 
 namespace Bitqap.Middleware.Business.DataAccess
 {
