@@ -30,7 +30,7 @@
             var requestedUser = JwtHelper.GetUserFromBearerToken(token);
             if (req.UserId != requestedUser.Id)
                 throw new BitqapBusinessException("Not allowed", "NOT_ALLOWED");
-            var result =  await _accountService.CreateAccount(req);
+            var result = await _accountService.CreateAccount(req);
             return Ok(result);
         }
 
@@ -42,7 +42,7 @@
 
             var token = Request.Headers.Authorization.ToString();
             var requestedUser = JwtHelper.GetUserFromBearerToken(token);
-            var result = await _accountService.RequestAccountBalanceByAccountKey(accountKey,requestedUser.Id);
+            var result = await _accountService.RequestAccountBalanceByAccountKey(accountKey, requestedUser.Id);
             return Ok(result);
         }
 
@@ -54,7 +54,7 @@
 
             var token = Request.Headers.Authorization.ToString();
             var requestedUser = JwtHelper.GetUserFromBearerToken(token);
-            var result = await _accountService.GetRequestedBalance(requestKey,requestedUser.Id);
+            var result = await _accountService.GetRequestedBalance(requestKey, requestedUser.Id);
             return Ok(result);
         }
 

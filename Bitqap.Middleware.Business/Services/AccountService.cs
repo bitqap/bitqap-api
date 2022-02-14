@@ -34,7 +34,7 @@ namespace Bitqap.Middleware.Business.Services
         {
             _logger.Log(NLog.LogLevel.Debug, "Service called for create new Account", default(Exception));
             var user = await _userservice.GetUserById(entity.UserId);
-            if(user == null) throw new BitqapBusinessException("Requested user not found", "USER_NOT_FOUND");
+            if (user == null) throw new BitqapBusinessException("Requested user not found", "USER_NOT_FOUND");
             var existedAccount = await _accountDataAccess.FindByAccountKey(entity.AccountKey);
             if (existedAccount != null) throw new BitqapBusinessException("Account already exists", "ACCOUNT_EXISTS");
             var result = await _accountDataAccess.Create(entity);
@@ -62,7 +62,7 @@ namespace Bitqap.Middleware.Business.Services
             var msgPyld = new MsgPayload { Direction = MsgDirection.SENT, MethodName = command, Payload = pylod, RequestKey = ky, UserId = userId };
             await _socketClient.SendMessage(msgPyld);
 
-            return new BasicResponse { Command=command, RequestId=ky, Message = "Request accepted" };
+            return new BasicResponse { Command = command, RequestId = ky, Message = "Request accepted" };
         }
 
         public async Task<Object> GetRequestedBalance(string key, long userId)

@@ -17,7 +17,7 @@ namespace Bitqap.Middleware.Business.Clients
         private readonly IMessagePayloadService _msgPayloadService;
         private static readonly object _lock = new();
         private static SocketClient _instance;
-        public delegate string ReceiverDelegate(string msg); 
+        public delegate string ReceiverDelegate(string msg);
         public ReceiverDelegate RcDlg { get; set; }
 
         SocketClient(ApiSettings apiSettings, IMessagePayloadService msgPayloadService)
@@ -37,17 +37,17 @@ namespace Bitqap.Middleware.Business.Clients
 
         public static SocketClient GetInstance(ApiSettings apiSettings, IMessagePayloadService msgPayloadService)
         {
-                if (_instance == null)
+            if (_instance == null)
+            {
+                lock (_lock)
                 {
-                    lock (_lock)
-                        {
-                            if (_instance == null)
-                            {
-                                _instance = new SocketClient(apiSettings, msgPayloadService);
-                            }
-                        }
+                    if (_instance == null)
+                    {
+                        _instance = new SocketClient(apiSettings, msgPayloadService);
+                    }
                 }
-                return _instance;
+            }
+            return _instance;
         }
 
         private async Task ConnectToSocket()
@@ -69,16 +69,17 @@ namespace Bitqap.Middleware.Business.Clients
             _logger.Log(LogLevel.Info, "Connected to socket", default(Exception));
         }
 
-        public async Task  OMessageEvent(object sender, WSMessageClientEventArgs args)
+        public async Task OMessageEvent(object sender, WSMessageClientEventArgs args)
         {
             _logger.Log(LogLevel.Debug, "Message received", default(Exception));
             _logger.Log(LogLevel.Debug, args.Message, default(Exception));
-            if(!string.IsNullOrEmpty(args.Message))
+            if (!string.IsNullOrEmpty(args.Message))
             {
-                if(args.Message.Contains("responseID"))
+                if (args.Message.Contains("responseID"))
                 {
                     var cmnResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<CommonSocketResponse>(args.Message);
-                    var msgPyld = new MsgPayload { 
+                    var msgPyld = new MsgPayload
+                    {
                         Direction = MsgDirection.RECEIVED,
                         MethodName = cmnResponse.command,
                         Payload = args.Message,
@@ -93,7 +94,7 @@ namespace Bitqap.Middleware.Business.Clients
 
         public async Task SendMessage(MsgPayload msgPyld)
         {
-            if (!_wsClient.IsRunning) throw new BitqapBusinessException("No connection to socket","SOCKET_NOT_CONNECTED");
+            if (!_wsClient.IsRunning) throw new BitqapBusinessException("No connection to socket", "SOCKET_NOT_CONNECTED");
             await _wsClient.SendToServerRawAsync(msgPyld.Payload);
             await _msgPayloadService.AddMessagePayload(msgPyld);
             _logger.Log(LogLevel.Debug, $"Message Sent: {msgPyld.Payload}", default(Exception));

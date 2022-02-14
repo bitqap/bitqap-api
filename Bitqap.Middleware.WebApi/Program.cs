@@ -4,7 +4,8 @@ Logger logger = LogManager.GetCurrentClassLogger();
 
 // Add services to the container.
 //with ConfigureApiBehaviorOptions added custom model state error handling
-builder.Services.AddControllers().ConfigureApiBehaviorOptions(options => {
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
+{
     options.SuppressModelStateInvalidFilter = true;
     options.InvalidModelStateResponseFactory = actionContext =>
     {
@@ -23,7 +24,8 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options => {
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options => {
+builder.Services.AddSwaggerGen(options =>
+{
     options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -61,8 +63,8 @@ var apiInjectedSettings = servicepoint.GetService<IOptions<ApiSettings>>();
 IUserDataAccess userDataAccess = new UserDataAccess(apiInjectedSettings.Value.DbConnection);
 IAccountDataAccess accountDataAccess = new AccountDataAccess(apiInjectedSettings.Value.DbConnection);
 IMessagePayloadDataAccess msgPayloadDataAccess = new MessagePayloadDataAccess(apiInjectedSettings.Value.DbConnection);
-IMappingExtension mappingExtension = new MappingExtension(); 
-IUserService userService = new UserService(userDataAccess, mappingExtension);
+IMappingExtension mappingExtension = new MappingExtension();
+IUserService userService = new UserService(userDataAccess, mappingExtension, apiInjectedSettings.Value);
 IMessagePayloadService msgPayloadService = new MessagePayloadService(msgPayloadDataAccess);
 SocketClient socketClient = SocketClient.GetInstance(apiInjectedSettings.Value, msgPayloadService);
 IAccountService accountService = new AccountService(accountDataAccess, socketClient, userService, msgPayloadService, mappingExtension, apiInjectedSettings.Value);
@@ -102,8 +104,11 @@ builder.Services.AddAuthentication(options =>
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = 401;
-            await context.Response.WriteAsync(new ErrorDetails { Message=string.IsNullOrEmpty(context.ErrorDescription)?"Invalid token!":context.ErrorDescription,
-                StatusCode="UNAUTHRIZED"}.ToString());
+            await context.Response.WriteAsync(new ErrorDetails
+            {
+                Message = string.IsNullOrEmpty(context.ErrorDescription) ? "Invalid token!" : context.ErrorDescription,
+                StatusCode = "UNAUTHRIZED"
+            }.ToString());
         }
     };
 });

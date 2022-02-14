@@ -57,7 +57,7 @@ namespace Bitqap.Middleware.Business.DataAccess
                                Password,
                                RegisterDate
                           FROM User where Username=@username";
-            var parameters = new { username = username};
+            var parameters = new { username = username };
             return await connection.QueryFirstOrDefaultAsync<User>(query, parameters);
         }
 
@@ -85,8 +85,8 @@ namespace Bitqap.Middleware.Business.DataAccess
                                Lastname = @lastname,
                                Password = @password
                          WHERE ID = @id";
-            var parameters = new { username = entity.Username, firstname = entity.Firstname, lastname = entity.Lastname, password = entity.Password, id=entity.Id };
-            await connection.ExecuteAsync(query,parameters);
+            var parameters = new { username = entity.Username, firstname = entity.Firstname, lastname = entity.Lastname, password = entity.Password, id = entity.Id };
+            await connection.ExecuteAsync(query, parameters);
             return entity;
         }
     }

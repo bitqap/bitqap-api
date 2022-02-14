@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bitqap.Middleware.Business.Utils
+﻿namespace Bitqap.Middleware.Business.Utils
 {
     public class BitqapBusinessException : System.Exception
     {

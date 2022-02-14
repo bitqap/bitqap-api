@@ -33,8 +33,15 @@ namespace Bitqap.Middleware.Business.DataAccess
                            @CreateDateTime,
                            @UserId
                        ) returning id";
-            var parameters = new { MethodName = entity.MethodName, RequestKey = entity.RequestKey, 
-                Payload = entity.Payload, Direction = entity.Direction.ToString(), CreateDateTime = DateTime.Now, UserId = entity.UserId };
+            var parameters = new
+            {
+                MethodName = entity.MethodName,
+                RequestKey = entity.RequestKey,
+                Payload = entity.Payload,
+                Direction = entity.Direction.ToString(),
+                CreateDateTime = DateTime.Now,
+                UserId = entity.UserId
+            };
             entity.Id = await connection.ExecuteScalarAsync<long>(query, parameters);
             return entity;
         }
@@ -63,7 +70,7 @@ namespace Bitqap.Middleware.Business.DataAccess
             var query = @"SELECT *
                           FROM MsgPayload where RequestKey=@RequestKey";
             var parameters = new { RequestKey = ky };
-            return await connection.QueryAsync<MsgPayload>(query,parameters);
+            return await connection.QueryAsync<MsgPayload>(query, parameters);
         }
 
         public async Task<MsgPayload> FindByRequestKeyAndDirection(string ky, MsgDirection direction)
@@ -71,7 +78,7 @@ namespace Bitqap.Middleware.Business.DataAccess
             using var connection = new SqliteConnection(_dbConnection);
             var query = @"SELECT *
                           FROM MsgPayload where RequestKey=@RequestKey and Direction=@Direction";
-            var parameters = new { RequestKey = ky, Direction=direction.ToString() };
+            var parameters = new { RequestKey = ky, Direction = direction.ToString() };
             return await connection.QueryFirstOrDefaultAsync<MsgPayload>(query, parameters);
         }
 

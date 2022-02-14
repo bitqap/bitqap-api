@@ -2,7 +2,7 @@
 
 namespace Bitqap.Middleware.Business.DataAccess
 {
-    public interface IUserDataAccess: IBaseDataAccess<User>
+    public interface IUserDataAccess : IBaseDataAccess<User>
     {
         Task<User> FindByUsername(string username);
     }

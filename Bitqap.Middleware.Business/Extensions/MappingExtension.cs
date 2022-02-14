@@ -6,7 +6,8 @@ namespace Bitqap.Middleware.Business.Extensions
     {
         public TDestination Map<TSource, TDestination>(TSource source) where TDestination : class
         {
-            var config = new MapperConfiguration(cfg => {
+            var config = new MapperConfiguration(cfg =>
+            {
                 cfg.CreateMap<TSource, TDestination>();
             });
             IMapper mapper = config.CreateMapper();

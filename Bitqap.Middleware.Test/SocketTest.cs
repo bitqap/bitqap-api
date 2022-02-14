@@ -1,4 +1,3 @@
-using Bitqap.Middleware.Business.Clients;
 using Bitqap.Middleware.Entity.ApiEntity;
 using NUnit.Framework;
 
@@ -17,7 +16,7 @@ namespace Bitqap.Middleware.Test
         public void ConnectionTest()
         {
             var settings = System.Text.Json.JsonSerializer.Deserialize<ApiSettings>(apiSettings1);
-            
+
             Assert.Pass();
         }
     }

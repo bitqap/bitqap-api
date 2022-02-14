@@ -21,7 +21,7 @@
                             {
                                 StatusCode = ((BitqapBusinessException)contextFeature.Error).ErrorCode,
                                 Message = ((BitqapBusinessException)contextFeature.Error).Message
-                            }.ToString());;
+                            }.ToString()); ;
                         }
                         else
                         {

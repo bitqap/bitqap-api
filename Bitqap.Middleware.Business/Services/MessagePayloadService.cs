@@ -23,7 +23,7 @@ namespace Bitqap.Middleware.Business.Services
         public async Task<MsgPayload> GetPayloadByRequestIdAndDirection(string reqId, MsgDirection direction)
         {
             _logger.Log(NLog.LogLevel.Debug, "Service called GetPayloadByRequestIdAndDirection", default(Exception));
-            return await _msgPayloadDataAccess.FindByRequestKeyAndDirection(reqId,direction);
+            return await _msgPayloadDataAccess.FindByRequestKeyAndDirection(reqId, direction);
         }
     }
 }

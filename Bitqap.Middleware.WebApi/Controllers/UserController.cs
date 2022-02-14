@@ -45,7 +45,7 @@ namespace Bitqap.Middleware.WebApi.Controllers
         public async Task<ActionResult> UpdateUser([FromBody] User entity)
         {
             _logger.Log(NLog.LogLevel.Info, "Request received udate user", default(Exception));
-            if(entity == null) throw new BitqapBusinessException("Empty request body", "EMPTY_BODY");
+            if (entity == null) throw new BitqapBusinessException("Empty request body", "EMPTY_BODY");
 
             var token = Request.Headers.Authorization.ToString();
             var requestedUser = JwtHelper.GetUserFromBearerToken(token);

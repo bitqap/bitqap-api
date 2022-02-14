@@ -2,7 +2,7 @@
 
 namespace Bitqap.Middleware.Entity.SocketEntity
 {
-    public  class GetBalanceRequest
+    public class GetBalanceRequest
     {
         [JsonProperty("command")]
         public string Commant { get; set; }

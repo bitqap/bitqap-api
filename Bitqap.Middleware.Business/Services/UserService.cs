@@ -11,12 +11,14 @@ namespace Bitqap.Middleware.Business.Services
     {
         readonly IUserDataAccess _userDataAccess;
         readonly IMappingExtension _mappingExtension;
+        readonly ApiSettings _apiSettings;
         readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public UserService(IUserDataAccess userDataAccess, IMappingExtension mappingExtension)
+        public UserService(IUserDataAccess userDataAccess, IMappingExtension mappingExtension, ApiSettings apiSettings)
         {
             _userDataAccess = userDataAccess;
             _mappingExtension = mappingExtension;
+            _apiSettings = apiSettings;
         }
 
         [Obsolete]
@@ -25,7 +27,8 @@ namespace Bitqap.Middleware.Business.Services
             _logger.Log(NLog.LogLevel.Debug, "Service called for create new User", default(Exception));
             var existedUser = await _userDataAccess.FindByUsername(entity.Username);
             if (existedUser != null) throw new BitqapBusinessException("User already exists", "USER_EXISTS");
-            var result =  await _userDataAccess.Create(entity);
+
+            var result = await _userDataAccess.Create(entity);
 
             return result;
         }
@@ -36,7 +39,7 @@ namespace Bitqap.Middleware.Business.Services
             var existedUser = await _userDataAccess.FindByUsername(entity.UserName);
             if (existedUser == null) throw new BitqapBusinessException("Invalid username or password", "INVALID_LOGIN");
             if (!string.Equals(existedUser.Password, entity.Password, StringComparison.InvariantCulture)) throw new BitqapBusinessException("Invalid username or password", "INVALID_LOGIN");
-            
+
             return existedUser;
         }
 
